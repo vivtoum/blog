@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RSA 加解密</title>
+    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/jsencrypt.min.js}"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    $(function () {
+        $("#bt").click(
+            function () {
+
+                var encrypt = new JSEncrypt();
+                encrypt.setPublicKey($("#publickey").val());
+                $.ajax({
+                    type: "POST",
+                    url: "/rsa/rsaTest",
+                    data: "{\"requestData\":" + encrypt.encrypt(JSON.stringify({userId: "1"})) + "}",
+                    dataType: 'json',
+                    contentType: "application/json",
+                    success: function (result) {
+                        console.log("解密的名称：" + result);
+                    }
+                });
+            });
+    });
+</script>
+<h2>公钥：</h2>
+<textarea id="publickey" rows="5" cols="45">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJ9s1qlOyv9qpuaTqauW6fUftzE50rVk3yVPZwv1aO1Ch/XSEz76xCwkyvqpaqceRXrPpdBmO5+ruJ+I8osOHo7L5GWEOcMOO+8izp9hXKBBrmRMD4Egpn00k9DhVIEKp/vyddZPS/doxB8onhN6poTJDLdFLFVEicMf52caN9GQIDAQAB
+        </textarea>
+<input type="button" id="bt" value="提交"/>
+</body>
+</html>
