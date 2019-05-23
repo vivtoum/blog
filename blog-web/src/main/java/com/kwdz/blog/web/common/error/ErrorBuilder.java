@@ -27,7 +27,7 @@ public class ErrorBuilder implements HandlerExceptionResolver, Ordered {
     /**
      * 错误KEY
      */
-    private final static String ERROR_NAME = "idc.error";
+    private final static String ERROR_NAME = "watsons.error";
 
     /**
      * 错误配置(ErrorConfiguration)

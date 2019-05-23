@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     @Autowired
     ErrorBuilder errorInfoBuilder;
 
-    public static final String DEFAULT_ERROR_VIEW = "common/error";
+    public static final String DEFAULT_ERROR_VIEW = "/common/sb2/404";
 
     @ExceptionHandler(value = Exception.class)
     public ModelAndView defaultErrorHandler(HttpServletRequest request, Exception e) {
@@ -32,6 +32,7 @@ public class GlobalExceptionHandler {
         Throwable ex = errorInfoBuilder.getError(request);
         mv.addObject("reason", "其他异常");
         mv.addObject("msg", ex.getMessage());
+        mv.addObject("status", errorInfoBuilder.getHttpStatus(request).value());
         mv.addObject("date", DateUtil.getDateTimeStr());
         log.error("统一异常处理：", ex);
         mv.setViewName(DEFAULT_ERROR_VIEW);
@@ -44,6 +45,7 @@ public class GlobalExceptionHandler {
         Throwable ex = errorInfoBuilder.getError(request);
         mv.addObject("reason", "登录信息解密失败");
         mv.addObject("msg", ex.getMessage());
+        mv.addObject("status", errorInfoBuilder.getHttpStatus(request).value());
         mv.addObject("date", DateUtil.getDateTimeStr());
         log.error("解密失败：", ex);
         mv.setViewName(DEFAULT_ERROR_VIEW);
