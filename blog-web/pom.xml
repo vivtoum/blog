@@ -99,6 +99,13 @@
             <artifactId>nekohtml</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.watsons</groupId>
+            <artifactId>Edge.DES</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/Edge.DES.jar</systemPath>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>

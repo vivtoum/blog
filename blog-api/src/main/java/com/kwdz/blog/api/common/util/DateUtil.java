@@ -8,24 +8,16 @@ import java.util.*;
 
 
 /**
- * <p>
- * 标题:
- * </p>
- * <p>
- * 描述: 日期处理类
- * </p>
- * <p>
- * 版权: Copyright (c) 2006
- * </p>
- * <p>
- * 公司: 广州瑞达通信技术有限公司
- * </p>
+ * 日期处理类
  *
- * @版本 1.0
+ * @author YT.Hu
+ * @version 1.0
  */
 @Slf4j
-public class DateHelper {
-    // 每月天数(非润年)
+public class DateUtil {
+    /**
+     * 每月天数(非润年)
+     */
     static int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // 闰年的特殊月份
@@ -849,7 +841,8 @@ public class DateHelper {
     public static Timestamp getOneMonthUTCTimebyOneUTC(Timestamp startUTC) {
         String start = convertDateToStr(startUTC);
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        sf.setTimeZone(TimeZone.getTimeZone("GMT")); // 设置转换后的时区
+        //  String year = start.substring(0, 4);
+        sf.setTimeZone(TimeZone.getTimeZone("GMT"));
         Calendar c1 = Calendar.getInstance();
         String year = start.substring(0, 4);
         String month = start.substring(5, 7);
@@ -897,9 +890,11 @@ public class DateHelper {
         Timestamp t = getCurrentServerUTCTime();
         Calendar cc = Calendar.getInstance();
         cc.setTime(t);
-        cc.add(Calendar.DAY_OF_MONTH, 1);//当前时间加上一条
+        //当前时间加上一条
+        cc.add(Calendar.DAY_OF_MONTH, 1);
         Date curDate1 = cc.getTime();
-        cc.add(Calendar.DAY_OF_MONTH, -2);//当前时间减去一天
+        //当前时间减去一天
+        cc.add(Calendar.DAY_OF_MONTH, -2);
         Date curDate2 = cc.getTime();
         listDate.add(curDate1);
         listDate.add(curDate2);
@@ -1093,7 +1088,7 @@ public class DateHelper {
         int i = 0;
         String[] strArrary = beginTime1.split(" ");
         beginTime1 = strArrary[0] + " 00:00";
-        if ((Long) DateHelper.convertStrToDate(beginTime1).getTime() > (Long) nowTime) {
+        if ((Long) DateUtil.convertStrToDate(beginTime1).getTime() > (Long) nowTime) {
             i = 1;
         }
 
@@ -1204,13 +1199,14 @@ public class DateHelper {
     /**
      * 指定日期加上天数后的日期
      *
-     * @param num     为增加的天数
+     * @param num  为增加的天数
      * @param date 指定日期
      */
     public static Date plusDay(Date date, int num) {
         Calendar ca = Calendar.getInstance();
         ca.setTime(date);
-        ca.add(Calendar.DATE, num);// num为增加的天数，可以改变的
+        // num为增加的天数，可以改变的
+        ca.add(Calendar.DATE, num);
         date = ca.getTime();
         return date;
     }

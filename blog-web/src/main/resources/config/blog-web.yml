@@ -39,6 +39,9 @@ jasypt:
 ###################### BLOG-WEB开发环境配置 #########################
 root:
   path: ./upload/
+url:
+  watsons-ept:
+    login: http://wtccn-gz-ept/Portal/Login.aspx           # e portal（登录地址）
 spring:
   profiles: dev                                            # 部署信息（选择配置分支）
   redis:
