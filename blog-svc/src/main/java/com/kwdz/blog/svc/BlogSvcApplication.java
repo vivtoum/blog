@@ -3,7 +3,7 @@ package com.kwdz.blog.svc;
 import com.kwdz.blog.svc.common.config.BlogSvcConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
 
 /**
  * BLOG-SVC 启动类
@@ -15,7 +15,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class BlogSvcApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BlogSvcApplication.class, args);
+        SpringApplication application = new SpringApplication(BlogSvcApplication.class);
+        application.run();
     }
 
 }

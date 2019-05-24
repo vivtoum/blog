@@ -2,6 +2,7 @@ package com.kwdz.blog.web.controller;
 
 
 import com.kwdz.blog.api.common.util.IpUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
