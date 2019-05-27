@@ -32,7 +32,7 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div th:replace="sb2/home::home"></div>
+            <div id="iframe_div" th:replace="sb2/home::iframe_div"></div>
             <!-- /.container-fluid -->
 
         </div>
@@ -74,5 +74,11 @@
 </div>
 <script th:replace="common/sb2/head::footer"></script>
 </body>
-
+<script>
+    $(function () {
+        $("#myPieChart").on('click', function () {
+            alert(11)
+        });
+    })
+</script>
 </html>
