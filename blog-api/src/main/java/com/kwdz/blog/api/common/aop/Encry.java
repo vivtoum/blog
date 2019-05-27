@@ -1,4 +1,4 @@
-package com.kwdz.blog.svc.remoteuser.aop;
+package com.kwdz.blog.api.common.aop;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

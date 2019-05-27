@@ -1,6 +1,6 @@
 package com.kwdz.blog.svc.remoteuser.entity;
 
-import com.kwdz.blog.svc.remoteuser.aop.Encry;
+import com.kwdz.blog.api.common.aop.Encry;
 import com.kwdz.blog.svc.remoteuser.aop.RemoteUserListen;
 import lombok.Data;
 

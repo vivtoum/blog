@@ -1,13 +1,13 @@
 package com.kwdz.blog.svc.common.service;
 
 
+import com.kwdz.blog.api.common.error.DataException;
 import com.kwdz.blog.api.common.page.PageInfo;
 import com.kwdz.blog.api.common.result.ResultModel;
 import com.kwdz.blog.api.common.util.FastCopy;
 import com.kwdz.blog.api.common.util.RedisUtil;
 import com.kwdz.blog.svc.common.dao.CommonDao;
 import com.kwdz.blog.svc.common.dao.FastPage;
-import com.kwdz.blog.svc.remoteuser.aop.Encry;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.jpa.internal.QueryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,7 +143,7 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
 
         E entity = commonDao.findOne(id);
         if (entity == null) {
-            throw new RuntimeException("实体ID不存在：" + id + "(" + entityClass + ")");
+            throw new DataException("实体ID不存在：" + id + "(" + entityClass + ")");
         }
         V entityVo = FastCopy.copy(entity, entityVoClass);
 

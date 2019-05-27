@@ -9,6 +9,13 @@ import java.io.Serializable;
  */
 @Data
 public class ResultModel<T> implements Serializable {
+
+    /**
+     * 常用msg
+     */
+    public static final String SUCCESS = "";
+
+
     /**
      * 通信数据
      */
@@ -20,7 +27,12 @@ public class ResultModel<T> implements Serializable {
     /**
      * 通信描述
      */
-    private String msg = "OK"; //描述信息
+    private String msg = "OK";
+
+    /**
+     * 标识码
+     */
+    private int code;
 
     /**
      * 内部构造器
@@ -41,12 +53,34 @@ public class ResultModel<T> implements Serializable {
     /**
      * 通过静态方法获取实例
      */
-    public static <T> ResultModel<T> of(T data, boolean flag, String msg) {
+    public static <T> ResultModel<T> of(T data, String msg) {
         ResultModel<T> result = new ResultModel<>();
         result.setData(data);
-        result.setFlag(flag);
         result.setMsg(msg);
         return result;
     }
 
+
+    /**
+     * 通过静态方法获取实例
+     */
+    public static <T> ResultModel<T> of(T data, boolean flag, String msg, int code) {
+        ResultModel<T> result = new ResultModel<>();
+        result.setData(data);
+        result.setFlag(flag);
+        result.setMsg(msg);
+        result.setCode(code);
+        return result;
+    }
+
+    /**
+     * 通过静态方法获取实例
+     */
+    public static <T> ResultModel<T> of(boolean flag, String msg, int code) {
+        ResultModel<T> result = new ResultModel<>();
+        result.setFlag(flag);
+        result.setMsg(msg);
+        result.setCode(code);
+        return result;
+    }
 }

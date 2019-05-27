@@ -1,5 +1,6 @@
 package com.kwdz.blog.svc.remoteuser.aop;
 
+import com.kwdz.blog.api.common.aop.Encry;
 import com.kwdz.blog.api.common.util.AESUtil;
 import lombok.extern.slf4j.Slf4j;
 

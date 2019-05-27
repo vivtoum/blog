@@ -1,5 +1,6 @@
 package com.kwdz.blog.web.common.error;
 
+import com.kwdz.blog.api.common.error.DataException;
 import com.kwdz.blog.api.common.result.ResultModel;
 import com.kwdz.blog.api.common.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
