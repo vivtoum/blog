@@ -1,6 +1,7 @@
 package com.kwdz.blog.api.remoteUser.fegin;
 
 import com.kwdz.blog.api.common.feign.BaseFeign;
+import com.kwdz.blog.api.remoteUser.vo.RemoteUserVo;
 import com.kwdz.blog.api.user.vo.UserVo;
 import org.springframework.cloud.netflix.feign.FeignClient;
 
@@ -11,6 +12,6 @@ import org.springframework.cloud.netflix.feign.FeignClient;
  */
 
 @FeignClient(name = "blog-svc", path = "/remoteUser/", url = "${blog-svc.url}")
-public interface RemoteUserFeign extends BaseFeign<UserVo>{
+public interface RemoteUserFeign extends BaseFeign<RemoteUserVo>{
 
 }

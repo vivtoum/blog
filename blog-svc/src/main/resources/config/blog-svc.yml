@@ -44,7 +44,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://www.vivtoum.tech:3306/springbootdemo?useSSL=false
+    url: jdbc:mysql://www.vivtoum.tech:3306/springbootdemo?useSSL=false&characterEncoding=utf-8
     username: root
     password: ENC(yVn9f7QzGDm0LKCIHBdgng6J7wpLebiy)
     tomcat:

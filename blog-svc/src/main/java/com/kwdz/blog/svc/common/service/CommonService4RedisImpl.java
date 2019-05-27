@@ -7,6 +7,7 @@ import com.kwdz.blog.api.common.util.FastCopy;
 import com.kwdz.blog.api.common.util.RedisUtil;
 import com.kwdz.blog.svc.common.dao.CommonDao;
 import com.kwdz.blog.svc.common.dao.FastPage;
+import com.kwdz.blog.svc.remoteuser.aop.Encry;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.jpa.internal.QueryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 import javax.persistence.Query;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -118,14 +119,24 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
     @Override
     public ResultModel<V> get(String id) {
         // 从缓存中获取城市信息
-        this.key = createKey(id);
+        try {
+            Object obj = Class.forName(this.entityClass.getName()).newInstance();
+            for (Field field : obj.getClass().getDeclaredFields()) {
+                if (field.isAnnotationPresent(Id.class)) {
+                    field.set(obj, id);
+                    break;
+                }
+            }
+            this.key = createKey(getId((E)obj));
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
 
+        }
         // 缓存存在
         boolean hasKey = redisUtil.hasKey(this.key);
         if (hasKey) {
             V v = (V) redisUtil.get(this.key);
 
-            log.info(this.entityVoClass.getSimpleName() + "ServiceImpl.get() : 从缓存中获取了数据 >> " + v.toString());
+            log.info(this.entityVoClass.getSimpleName() + ".ServiceImpl.get() : 从缓存中获取了数据 >> " + v.toString());
             return ResultModel.of(v);
         }
 
@@ -138,7 +149,7 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
 
         // 插入缓存,60秒缓存
         redisUtil.set(this.key, entityVo, 60);
-        log.info(this.entityVoClass.getSimpleName() + "ServiceImpl.get() : 数据插入缓存 >> " + entityVo.toString());
+        log.info(this.entityVoClass.getSimpleName() + ".ServiceImpl.get() : 数据插入缓存 >> " + entityVo.toString());
 
         return ResultModel.of(entityVo);
     }
@@ -168,19 +179,32 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
         try {
             E e = commonDao.save(FastCopy.copy(entity, entityClass));
 
-            Object obj = Class.forName(this.entityVoClass.getName()).newInstance();
-            Class c = obj.getClass();
+//            Object obj = Class.forName(this.entityVoClass.getName()).newInstance();
+            Class c = e.getClass();
             //  取得所有类成员变量
             Field[] fields = c.getDeclaredFields();
             for (int i = 0; i < fields.length; i++) {
                 try {
-                    if ("userId".equalsIgnoreCase(fields[i].getName())) {
+                    Field field = fields[i];
+                    field.setAccessible(true);
+                    if (field.isAnnotationPresent(Id.class)) {
                         //  缓存存在，删除缓存
                         this.key = createKey(getId(e));
                         boolean hasKey = redisUtil.hasKey(this.key);
                         if (hasKey) {
                             redisUtil.del(key);
-                            log.info(this.entityVoClass.getSimpleName() + "ServiceImpl.save() : 从缓存中删除  >> " + this.key + e.toString());
+                            log.info(this.entityVoClass.getSimpleName() + ".ServiceImpl.save() : 从缓存中删除  >> " + this.key + e.toString());
+                        }
+                        break;
+                    }
+
+                    if ("userId".equalsIgnoreCase(field.getName())) {
+                        //  缓存存在，删除缓存
+                        this.key = createKey(getId(e));
+                        boolean hasKey = redisUtil.hasKey(this.key);
+                        if (hasKey) {
+                            redisUtil.del(key);
+                            log.info(this.entityVoClass.getSimpleName() + ".ServiceImpl.save() : 从缓存中删除  >> " + this.key + e.toString());
                         }
                     }
                 } catch (Exception ex) {
@@ -219,16 +243,24 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
         if (ids != null && ids.size() > 0) {
             for (String id : ids) {
                 commonDao.delete(id);
+                try {
+                    Object obj = Class.forName(this.entityClass.getName()).newInstance();
+                    for (Field field : obj.getClass().getDeclaredFields()) {
+                        if (field.isAnnotationPresent(Id.class)) {
+                            field.set(obj, id);
+                            break;
+                        }
+                    }
+                    this.key = createKey(getId((E)obj));
+                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
 
-                // 从缓存中获取信息
-                String key = createKey(id);
-
+                }
                 // 缓存存在
-                boolean hasKey = redisUtil.hasKey(key);
+                boolean hasKey = redisUtil.hasKey(this.key);
                 if (hasKey) {
-                    V v = (V) redisUtil.get(key);
-                    redisUtil.del(key);
-                    log.info(this.entityVoClass.getSimpleName() + "ServiceImpl.delete() : 从缓存中删除  >> " + v.toString());
+                    V v = (V) redisUtil.get(this.key);
+                    redisUtil.del(this.key);
+                    log.info(this.entityVoClass.getSimpleName() + ".ServiceImpl.delete() : 从缓存中删除  >> " + v.toString());
                 }
             }
             return ResultModel.of(ids);
@@ -238,34 +270,26 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
 
 
     public String getId(E e) {
-
+        String id = "";
         try {
             Class<? extends Object> tClass = e.getClass();
 
             //得到所有属性
-            Field[] field = tClass.getDeclaredFields();
+            Field[] fields = tClass.getDeclaredFields();
 
             /**
-             * 这里只需要 id 这个属性，所以直接取 field[0] 这
+             * 这里只需要 id 这个属性，所以直接取 fields[0] 这
              * 一个，如果id不是排在第一位，自己取相应的位置，
              * 如果有需要，可以写成for循环，遍历全部属性
              */
-
-            //设置可以访问私有变量
-            field[0].setAccessible(true);
-
-            //获取属性的名字
-            String name = field[0].getName();
-            //将属性名字的首字母大写
-            name = name.replaceFirst(name.substring(0, 1), name.substring(0, 1).toUpperCase());
-
-            //整合出 getId() 属性这个方法
-            Method m = tClass.getMethod("get" + name);
-
-            //调用这个整合出来的get方法，强转成自己需要的类型
-            String id = (String) m.invoke(e);
-
-            //成功通过 T 泛型对象取到具体对象的 id ！
+            for (Field field : fields) {
+                field.setAccessible(true);
+                String fieldValue = (String) field.get(e);
+                if (field.isAnnotationPresent(Id.class)) {
+                    id = field.getName() + ":" + fieldValue;
+                    break;
+                }
+            }
             return id;
         } catch (Exception ex) {
             log.info("没有这个属性");

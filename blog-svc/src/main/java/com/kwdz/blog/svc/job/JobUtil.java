@@ -1,7 +1,12 @@
 package com.kwdz.blog.svc.job;
 
-import com.kwdz.blog.svc.remoteUser.entity.RemoteUserEntity;
+import com.kwdz.blog.api.common.util.FastCopy;
+import com.kwdz.blog.api.remoteUser.vo.RemoteUserVo;
+import com.kwdz.blog.svc.remoteuser.entity.RemoteUserEntity;
+import com.kwdz.blog.svc.remoteuser.service.RemoteUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -17,9 +22,14 @@ import java.util.List;
  * @date 2019/5/24 17:23
  */
 @Slf4j
+@Component
 public class JobUtil {
 
-    public static List<RemoteUserEntity> getUser(File file) {
+    @Autowired
+    private RemoteUserService remoteUserService;
+
+
+    private static List<RemoteUserEntity> getUser(File file) {
         List<RemoteUserEntity> list = new ArrayList<>();
         FileInputStream fis = null;
         InputStreamReader isr = null;
@@ -81,4 +91,11 @@ public class JobUtil {
         return list;
     }
 
+    public void refreshUser() {
+        remoteUserService.truncate();
+        List<RemoteUserEntity> list = JobUtil.getUser(new File("D:\\yt.hu\\IdeaProjects\\blog\\blog-svc\\src\\main\\resources\\Interface.txt"));
+        List<RemoteUserVo> userVoList = remoteUserService.saveList(FastCopy.copyList(list, RemoteUserVo.class)).getData();
+        if (userVoList.size() > 0)
+            log.info(JobUtil.getUser(new File("D:\\yt.hu\\IdeaProjects\\blog\\blog-svc\\src\\main\\resources\\Interface.txt")).toString());
+    }
 }

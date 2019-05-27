@@ -1,9 +1,10 @@
-package com.kwdz.blog.svc.remoteUser.dao;
+package com.kwdz.blog.svc.remoteuser.dao;
 
 import com.kwdz.blog.svc.common.dao.CommonDao;
-import com.kwdz.blog.svc.remoteUser.entity.RemoteUserEntity;
+import com.kwdz.blog.svc.remoteuser.entity.RemoteUserEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author YT.Hu
@@ -16,6 +17,7 @@ public interface RemoteUserDao extends CommonDao<RemoteUserEntity> {
      * 清空表
      */
     @Modifying
-    @Query(value = "delete from remote_user" ,nativeQuery = true)
+    @Transactional(rollbackFor = Exception.class)
+    @Query(value = "truncate table remote_user" ,nativeQuery = true)
     void delete();
 }
