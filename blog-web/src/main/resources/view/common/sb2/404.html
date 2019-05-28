@@ -356,10 +356,10 @@
             <div class="container-fluid">
 
                 <!-- 404 Error Text -->
-                <div class="text-center">
-                    <div class="error mx-auto" th:attr="data-text=${status}" th:text="${status}"></div>
-                    <p class="lead text-gray-800 mb-5" th:text="${reason}"></p>
-                    <p class="text-gray-500 mb-0" th:text="${msg}"></p>
+                <div class="text-center" th:object="${exception}">
+                    <div class="error mx-auto" th:attr="data-text=*{code}" th:text="*{code}"></div>
+                    <p class="lead text-gray-800 mb-5" th:text="*{data}"></p>
+                    <p class="text-gray-500 mb-0" th:text="*{msg}"></p>
                     <a href="index.html">&larr; Back to Dashboard</a>
                 </div>
 

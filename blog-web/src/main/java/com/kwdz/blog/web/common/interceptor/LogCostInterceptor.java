@@ -1,6 +1,7 @@
 package com.kwdz.blog.web.common.interceptor;
 
 import com.kwdz.blog.api.common.properties.PropertiesListenerConfig;
+import com.kwdz.blog.api.remoteUser.vo.RemoteUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,10 +24,10 @@ public class LogCostInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         this.start = System.currentTimeMillis();
         HttpSession session = request.getSession();
-        Object ob = session.getAttribute("user");
+        RemoteUserVo ob = (RemoteUserVo) session.getAttribute("user");
         if (ob != null) {
             log.info("┏━━━━━━━ 登录信息校验 START ━━━━━━━┓");
-            log.info("             "+ob.toString() + " 访问 HR Process");
+            log.info("             " + ob.getChineseName() + " 访问 HR Process");
             return true;
         }
         session.setAttribute("preurl", request.getRequestURI());

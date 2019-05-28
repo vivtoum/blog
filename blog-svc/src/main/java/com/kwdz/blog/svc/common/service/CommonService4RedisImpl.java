@@ -127,7 +127,7 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
                     break;
                 }
             }
-            this.key = createKey(getId((E)obj));
+            this.key = createKey(getId((E) obj));
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
 
         }
@@ -143,7 +143,7 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
 
         E entity = commonDao.findOne(id);
         if (entity == null) {
-            throw new DataException("实体ID不存在：" + id + "(" + entityClass + ")");
+            throw new RuntimeException("实体ID不存在：" + id + "(" + entityClass + ")");
         }
         V entityVo = FastCopy.copy(entity, entityVoClass);
 
@@ -251,7 +251,7 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
                             break;
                         }
                     }
-                    this.key = createKey(getId((E)obj));
+                    this.key = createKey(getId((E) obj));
                 } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
 
                 }

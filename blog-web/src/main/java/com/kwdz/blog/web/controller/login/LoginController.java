@@ -1,10 +1,16 @@
 package com.kwdz.blog.web.controller.login;
 
 import Edge.DES.DES;
+import com.kwdz.blog.api.common.error.AccountException;
+import com.kwdz.blog.api.common.result.ResultModel;
 import com.kwdz.blog.api.common.util.DateUtil;
 import com.kwdz.blog.api.common.util.ErrorPageUtil;
 import com.kwdz.blog.api.common.util.IpUtil;
+import com.kwdz.blog.api.menu.fegin.SysMenuFeign;
+import com.kwdz.blog.api.remoteUser.fegin.RemoteUserFeign;
+import com.kwdz.blog.api.remoteUser.vo.RemoteUserVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +31,12 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/login")
 public class LoginController {
 
+    @Autowired
+    private SysMenuFeign sysMenuFeign;
+
+    @Autowired
+    private RemoteUserFeign remoteUserFeign;
+
     /**
      * e-portal跳转过来的入口,用于校验
      */
@@ -39,11 +51,16 @@ public class LoginController {
         if (true) {
             HttpSession session = request.getSession();
             if (session.getAttribute("user") == null) {
-                session.setAttribute("user", staffNo);
-                session.setAttribute("level", "G17");
-                log.warn("不存在session");
+                ResultModel<RemoteUserVo> resultModel = remoteUserFeign.get(staffNo);
+                if (resultModel.isFlag()) {
+                    RemoteUserVo userVo = resultModel.getData();
+                    session.setAttribute("user", userVo);
+                } else {
+                    throw new AccountException(ResultModel.of("登录异常，请联系管理员"));
+                }
+                log.warn("不存在session，从数据库获取成功，添加在session");
             } else {
-                log.info("存在session");
+                log.info("已存在session");
             }
             mv.setViewName("redirect:/pages/sb2");
         } else {

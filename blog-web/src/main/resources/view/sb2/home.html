@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<div id="iframe_div" class="container-fluid" th:fragment="iframe_div">
+<div id="iframe_div" th:fragment="iframe_div">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -315,6 +315,12 @@
             </div>
         </div>
     </div>
+    <!-- Page level plugins -->
+    <script th:src="@{/sb2/vendor/chart.js/Chart.min.js}"></script>
+
+    <!-- Page level custom scripts -->
+    <script th:src="@{/sb2/js/demo/chart-pie-demo.js}"></script>
+    <script th:src="@{/sb2/js/demo/chart-area-demo.js}"></script>
 </div>
 
 </body>
