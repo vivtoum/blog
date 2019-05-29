@@ -1,5 +1,6 @@
 package com.kwdz.blog.api.common.util;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
@@ -817,6 +818,13 @@ public class DateUtil {
         return endDate;
     }
 
+//
+//    public static void main(String[] args) {
+//        String[] a = {"2019-06-25","2019-06-26","2019-06-27","2019-06-28", "2019-06-29", "2019-06-30"};
+//        String c = getLastWorkDate("2019-05-30", a, 30);
+//        System.out.println(c);
+//    }
+
     /**
      * 检查某一日期是否为双休日
      *
@@ -1189,8 +1197,8 @@ public class DateUtil {
     public static String Date2String(Date date, String pattern) {
 
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+//        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 
         return sdf.format(date);
 

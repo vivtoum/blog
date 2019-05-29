@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="iframe_div" th:fragment="iframe_div">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">员工辞职通知表</h1>
+    </div>
+
+
+    <!-- Content Row -->
+
+    <div class="row">
+
+        <!-- Area Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="datetimepicker">date time picker</label>
+                            <input type="text" class="form-control" th:value="${last_day}" id="datetimepicker">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Email address</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1"
+                                   placeholder="name@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Example select</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // $('#datetimepicker').datepicker({
+        //     fontAwesome:'font-awesome',//指定
+        //     language:  'zh-CN',//语言
+        //     format: 'yyyy-mm-dd'//日期格式化
+        //     autoclose: 1//选择后自动关闭
+        // minView: "month",//设置只显示到月份
+        // todayBtn: 1,//显示‘今日’按钮
+
+        // clearBtn:true,//清除按钮
+
+
+        // });
+    </script>
+</div>
+</body>
+</html>
