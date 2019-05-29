@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.FileNotFoundException;
 
-import static com.kwdz.blog.web.common.util.HolidayUtil.getHoliday;
-
 @Controller
 @RequestMapping("/pages/")
 public class PagesController {
