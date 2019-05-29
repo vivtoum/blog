@@ -32,13 +32,14 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
                                 </div>
-                                <input type="text" class="form-control" th:value="${last_day}" id="last_day" readonly>
+                                <input type="text" class="form-control" name="last_day" th:value="${last_day}"
+                                       id="last_day" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="res_reason">辞职原因</label>
-                            <textarea class="form-control" id="res_reason" rows="3"></textarea>
+                            <textarea class="form-control" name="res_reason" id="res_reason" rows="3"></textarea>
                         </div>
 
                         <button type="button" id="res_btn" class="btn btn-outline-primary">提交</button>

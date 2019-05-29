@@ -93,9 +93,9 @@ public class JobUtil {
 
     public void refreshUser() {
         remoteUserService.truncate();
-        List<RemoteUserEntity> list = JobUtil.getUser(new File("D:\\yt.hu\\IdeaProjects\\blog\\blog-svc\\src\\main\\resources\\Interface.txt"));
+        List<RemoteUserEntity> list = JobUtil.getUser(new File("D:\\idea-project\\blog\\blog-svc\\src\\main\\resources\\Interface.txt"));
         List<RemoteUserVo> userVoList = remoteUserService.saveList(FastCopy.copyList(list, RemoteUserVo.class)).getData();
         if (userVoList.size() > 0)
-            log.info(JobUtil.getUser(new File("D:\\yt.hu\\IdeaProjects\\blog\\blog-svc\\src\\main\\resources\\Interface.txt")).toString());
+            log.info(JobUtil.getUser(new File("D:\\idea-project\\blog\\blog-svc\\src\\main\\resources\\Interface.txt")).toString());
     }
 }
