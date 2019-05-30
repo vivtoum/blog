@@ -36,16 +36,16 @@ public class MenuServiceImpl extends CommonServiceImpl<SysMenuVo, SysMenuEntity>
         //  从redis中查找key
         if (redisUtil.hasKey(staffCode + ":" + level + ":MENU")) {
             //  读取redis缓存
-            return FastJson.toJsonStr(redisUtil.get(staffCode + "_" + level + "_MENU"));
+            return FastJson.toJsonStr(redisUtil.get(staffCode + ":" + level + ":MENU"));
         } else {
-            List<SysMenuEntity> menus = menuDao.findAll();
+            List<SysMenuEntity> menus = menuDao.desByOrder("");
             //  获取顶端节点，即获取父节点 = -1 的节点
             List<SysMenuEntity> top = menus.stream().filter(x -> StringUtils.isEmpty(x.getParentId()) || x.getParentId().equals("-1")).collect(Collectors.toList());
             Map<String, List<SysMenuEntity>> allMap = menus.stream().collect(Collectors.groupingBy(SysMenuEntity::getParentId));
             //  执行递归
             List<SysMenuVo> list = this.treeMenuData(top, allMap);
             //  缓存倒redis 10分钟
-            redisUtil.set(staffCode + "_" + level + "_MENU", list, 10 * 60L);
+            redisUtil.set(staffCode + ":" + level + ":MENU", list, 10 * 60L);
             return FastJson.toJsonStr(list);
         }
     }

@@ -32,6 +32,7 @@ public class PagesController {
         if (session != null) {
             RemoteUserVo currentUser = (RemoteUserVo) session.getAttribute("user");
             String staffNo = currentUser.getEmployeeNo();
+            modelAndView.addObject("currentUser",currentUser);
             modelAndView.addObject("_menu", FastJson.parseList(sysMenuFeign.getTreeMenu(staffNo, ""), SysMenuVo.class));
         }
         return modelAndView;

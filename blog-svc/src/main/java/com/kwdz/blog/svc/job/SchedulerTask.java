@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
+
 /**
  * 定时任务
  *
@@ -23,7 +25,7 @@ public class SchedulerTask {
 
     @Scheduled(cron = "0 0 3 * * ?")
 //    @Scheduled(cron = "0 */1 * * * ?")
-    private void process() {
+    private void process() throws FileNotFoundException {
         jobUtil.refreshUser();
         log.warn("refreshUser times: " + (count++) + " in " + DateUtil.getDateTimeStr());
     }

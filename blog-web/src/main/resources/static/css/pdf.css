@@ -1,0 +1,73 @@
+body {
+    font-family: 'SimSun';
+    font-size: 12px;
+}
+
+h2 {
+    color: crimson
+}
+
+#myheader {
+    /*position: relative;
+    top: 10px;
+    right: 50px;*/
+    width: 500px;
+    height: 22px;
+    /*background: url('http://192.168.2.105:8999/css/sg.jpg') no-repeat;*/
+    border: 1px solid #000000;
+}
+
+table {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+.out_borad {
+    padding: 5px;
+    border: 1px solid;
+    display: inline-block;
+}
+
+#signImg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 151px;
+    width: 151px;
+    background: url('../img/sg.jpg') no-repeat;
+}
+
+table, th, td {
+    padding: 5px;
+    border: 1px solid;
+
+}
+
+table p {
+    margin: 0;
+}
+
+table tr {
+    text-align: center;
+    width: 100%;
+}
+
+table tr td {
+    width: 16.6%;
+}
+
+/*table tr:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+    background-color: #ffffff;
+}*/
+.user_fill-in {
+    text-decoration: underline;
+}
+
+
+#input1 {
+    border-bottom: 1px solid #000000;
+}

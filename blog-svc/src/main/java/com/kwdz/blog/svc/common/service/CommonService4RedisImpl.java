@@ -284,7 +284,7 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
              */
             for (Field field : fields) {
                 field.setAccessible(true);
-                String fieldValue = (String) field.get(e);
+                String fieldValue = field.get(e).toString();
                 if (field.isAnnotationPresent(Id.class)) {
                     id = field.getName() + ":" + fieldValue;
                     break;

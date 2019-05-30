@@ -11,6 +11,9 @@ spring:
     suffix: .html
     encoding: utf-8
     mode: LEGACYHTML5
+  freemarker:                                                              # FREEMARKER（模板引擎配置）
+    template-loader-path: classpath:/templates/
+    request-context-attribute: request
 
   resources:                                                               # 静态资源（标识资源路径）
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,

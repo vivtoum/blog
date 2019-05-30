@@ -21,13 +21,13 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Overview</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
                     <form id="resignation_form">
                         <div class="form-group">
-                            <label for="last_day">date time picker</label>
+                            <label for="last_day">最后工作日</label>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
@@ -43,7 +43,7 @@
                         </div>
 
                         <button type="button" id="res_btn" class="btn btn-outline-primary">提交</button>
-                        <button type="reset" class="btn btn-outline-secondary">Secondary</button>
+                        <button type="reset" class="btn btn-outline-secondary">重置</button>
                     </form>
                 </div>
             </div>
@@ -75,20 +75,38 @@
                     res_reason: $('#res_reason').val()
                 };
                 encrypt.setPublicKey(key);
-                $.ajax({
-                    type: "POST",
-                    url: "/apply/resignation",
-                    // data: "{\"requestData\":" + encrypt.encrypt(JSON.stringify({
-                    //     bpm: 'resignation',
-                    //     formData: JSON.stringify(_table)
-                    // })) + "}",
-                    data: $("#resignation_form").serializeArray(),
-                    dataType: 'json',
-                    contentType: "application/json",
-                    success: function (result) {
-                        console.log("解密的名称：" + result);
-                    }
+
+                /*     $.ajax({
+                         type: "POST",
+                         url: "/apply/resignation",
+                         // data: "{\"requestData\":" + encrypt.encryptLong(JSON.stringify({
+                         //     type: 'resignation',
+                         //     formData: decodeURIComponent($("#resignation_form").serialize(), true)
+                         // })) + "}",
+                         data: {type: 'resignation', formData: JSON.stringify(_table)},
+                         contentType: "application/json",
+                         success: function (result) {
+                         }
+                     });*/
+
+                $.post("/apply/resignation", {type: 'resignation', formData: JSON.stringify(_table)}, function (data) {
+                    $.confirm({
+                        title: false,
+                        content: data,
+                        type: 'green',
+                        typeAnimated: true,
+                        buttons: {
+                            yes: {
+                                text: 'OK', // With spaces and symbols
+                                //   isHidden: true, // hide the button
+                                keys: ['esc'],
+                                action: function () {
+                                }
+                            }
+                        }
+                    });
                 });
+
             })
     </script>
 </div>

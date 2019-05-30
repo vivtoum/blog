@@ -7,6 +7,7 @@ import com.kwdz.blog.svc.remoteuser.service.RemoteUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -29,8 +30,9 @@ public class JobUtil {
     private RemoteUserService remoteUserService;
 
 
-    private static List<RemoteUserEntity> getUser(File file) {
+    private static List<RemoteUserEntity> getUser(String path) throws FileNotFoundException {
         List<RemoteUserEntity> list = new ArrayList<>();
+        File file = ResourceUtils.getFile(path);
         FileInputStream fis = null;
         InputStreamReader isr = null;
         //  用于包装InputStreamReader,提高处理性能。因为BufferedReader有缓冲的，而InputStreamReader没有。
@@ -91,11 +93,11 @@ public class JobUtil {
         return list;
     }
 
-    public void refreshUser() {
+    public void refreshUser() throws FileNotFoundException {
         remoteUserService.truncate();
-        List<RemoteUserEntity> list = JobUtil.getUser(new File("D:\\idea-project\\blog\\blog-svc\\src\\main\\resources\\Interface.txt"));
+        List<RemoteUserEntity> list = JobUtil.getUser("classpath:Interface.txt");
         List<RemoteUserVo> userVoList = remoteUserService.saveList(FastCopy.copyList(list, RemoteUserVo.class)).getData();
         if (userVoList.size() > 0)
-            log.info(JobUtil.getUser(new File("D:\\idea-project\\blog\\blog-svc\\src\\main\\resources\\Interface.txt")).toString());
+            log.info(JobUtil.getUser("classpath:Interface.txt").toString());
     }
 }

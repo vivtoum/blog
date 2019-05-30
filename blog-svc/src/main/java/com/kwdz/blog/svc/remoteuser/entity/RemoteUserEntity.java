@@ -1,7 +1,7 @@
 package com.kwdz.blog.svc.remoteuser.entity;
 
 import com.kwdz.blog.api.common.aop.Encry;
-import com.kwdz.blog.svc.remoteuser.aop.RemoteUserListen;
+import com.kwdz.blog.svc.common.aop.JpaEntityListen;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,10 +13,10 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@EntityListeners(value = {RemoteUserListen.class})
+@EntityListeners(value = {JpaEntityListen.class})
 @Table(name = "remote_user")
 public class RemoteUserEntity {
-    @Encry(loadDecode = true)
+    @Encry
     private String accountType;
     @Id
     private String employeeNo;
@@ -26,11 +26,11 @@ public class RemoteUserEntity {
     private String positionName;
     @Encry
     private String orgUnitName;
-    @Encry(loadDecode = true)
+    @Encry
     private String chineseName;
-    @Encry(loadDecode = true)
+    @Encry
     private String pinyinName;
-    @Encry(loadDecode = true)
+    @Encry
     private String englishName;
     @Encry
     private String department;

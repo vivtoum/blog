@@ -17,6 +17,6 @@ public @interface Encry {
 
     boolean saveEncode() default true;
 
-    boolean loadDecode() default false;
+    boolean loadDecode() default true;
 
 }

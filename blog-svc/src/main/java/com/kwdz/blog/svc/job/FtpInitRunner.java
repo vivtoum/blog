@@ -7,8 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
+
 /**
  * 启动后只执行一次的JOB
+ *
  * @author YT.Hu
  */
 @Slf4j
@@ -23,7 +26,7 @@ public class FtpInitRunner implements CommandLineRunner {
     private JobUtil jobUtil;
 
     @Override
-    public void run(String... var1) {
+    public void run(String... var1) throws FileNotFoundException {
         jobUtil.refreshUser();
     }
 }
