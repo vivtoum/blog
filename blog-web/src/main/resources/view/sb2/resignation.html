@@ -89,25 +89,53 @@
                          }
                      });*/
 
-                $.post("/apply/resignation", {type: 'resignation', formData: JSON.stringify(_table)}, function (data) {
-                    $.confirm({
-                        title: false,
-                        content: data,
-                        type: 'green',
-                        typeAnimated: true,
-                        buttons: {
-                            yes: {
-                                text: 'OK', // With spaces and symbols
-                                //   isHidden: true, // hide the button
-                                keys: ['esc'],
-                                action: function () {
-                                }
+                $.confirm({
+                    title: false,
+                    content: '是否确认提交申请',
+                    type: 'red',
+                    typeAnimated: true,
+                    buttons: {
+                        yes: {
+                            text: '确认',
+                            keys: ['enter', 'y', 'space'],
+                            btnClass: 'btn-success',
+                            action: function () {
+                                $.post("/apply/resignation", {
+                                    type: 'resignation',
+                                    formData: JSON.stringify(_table)
+                                }, function (data) {
+                                    $.confirm({
+                                        title: false,
+                                        content: data,
+                                        type: 'green',
+                                        typeAnimated: true,
+                                        buttons: {
+                                            yes: {
+                                                text: 'OK', // With spaces and symbols
+                                                //   isHidden: true, // hide the button
+                                                keys: ['enter', 'esc', 'space'],
+                                                action: function () {
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                        },
+                        no: {
+                            text: '取消',
+                            keys: ['esc', 'n'],
+                            btnClass: 'btn-danger',
+                            action: function () {
                             }
                         }
-                    });
+                    }
+
                 });
 
-            })
+
+            }
+        )
     </script>
 </div>
 </body>
