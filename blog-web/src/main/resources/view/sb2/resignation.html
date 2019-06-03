@@ -6,6 +6,7 @@
 </head>
 <body>
 <div id="iframe_div" th:fragment="iframe_div">
+    <script th:src="@{/js/custom-jq-comfirm.js}"></script>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">员工辞职通知表</h1>
@@ -50,93 +51,9 @@
         </div>
     </div>
     <script th:inline="javascript">
-        $('#last_day').datepicker({
-            startDate: new Date([[${last_day}]]),
-            fontAwesome: 'font-awesome',//指定
-            language: 'zh',//语言
-            format: 'yyyy-mm-dd',//日期格式化
-            autoclose: 1,//选择后自动关闭
-            minView: "month",//设置只显示到月份
-            todayBtn: 1,//显示‘今日’按钮
-
-            // clearBtn:true,//清除按钮
-        });// 2018,7,1 号能点击，要传入比开始的日期多一天
-
-
-        $("#res_btn").click(
-            function () {
-                var key =
-                    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJ9s1qlOyv9qpuaTqauW6fUftzE50rVk3yVPZwv1aO1Ch/' +
-                    'XSEz76xCwkyvqpaqceRXrPpdBmO5+ruJ+I8osOHo7L5GWEOcMOO+8izp9hXKBBrmRMD4Egpn00k9DhVIEKp/vyddZPS/' +
-                    'doxB8onhN6poTJDLdFLFVEicMf52caN9GQIDAQAB';
-                var encrypt = new JSEncrypt();
-                var _table = {
-                    last_day: $("#last_day").val(),
-                    res_reason: $('#res_reason').val()
-                };
-                encrypt.setPublicKey(key);
-
-                /*     $.ajax({
-                         type: "POST",
-                         url: "/apply/resignation",
-                         // data: "{\"requestData\":" + encrypt.encryptLong(JSON.stringify({
-                         //     type: 'resignation',
-                         //     formData: decodeURIComponent($("#resignation_form").serialize(), true)
-                         // })) + "}",
-                         data: {type: 'resignation', formData: JSON.stringify(_table)},
-                         contentType: "application/json",
-                         success: function (result) {
-                         }
-                     });*/
-
-                $.confirm({
-                    title: false,
-                    content: '是否确认提交申请',
-                    type: 'red',
-                    typeAnimated: true,
-                    buttons: {
-                        yes: {
-                            text: '确认',
-                            keys: ['enter', 'y', 'space'],
-                            btnClass: 'btn-success',
-                            action: function () {
-                                $.post("/apply/resignation", {
-                                    type: 'resignation',
-                                    formData: JSON.stringify(_table)
-                                }, function (data) {
-                                    $.confirm({
-                                        title: false,
-                                        content: data,
-                                        type: 'green',
-                                        typeAnimated: true,
-                                        buttons: {
-                                            yes: {
-                                                text: 'OK', // With spaces and symbols
-                                                //   isHidden: true, // hide the button
-                                                keys: ['enter', 'esc', 'space'],
-                                                action: function () {
-                                                }
-                                            }
-                                        }
-                                    });
-                                });
-                            }
-                        },
-                        no: {
-                            text: '取消',
-                            keys: ['esc', 'n'],
-                            btnClass: 'btn-danger',
-                            action: function () {
-                            }
-                        }
-                    }
-
-                });
-
-
-            }
-        )
+        var _data = [[${last_day}]];
     </script>
+    <script th:src="@{/js/resignation.js}"></script>
 </div>
 </body>
 </html>

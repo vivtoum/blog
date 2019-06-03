@@ -6,8 +6,10 @@ import com.kwdz.blog.api.common.controller.BaseController;
 import com.kwdz.blog.api.common.result.ResultModel;
 import com.kwdz.blog.api.common.util.DateUtil;
 import com.kwdz.blog.api.common.util.IpUtil;
+import com.kwdz.blog.api.common.util.RSAUtils;
 import com.kwdz.blog.api.common.util.RsaSecurityParameter;
 import com.kwdz.blog.api.remoteUser.vo.RemoteUserVo;
+import com.kwdz.blog.web.common.config.RsaDecodeRequestBodyAdvice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,10 +32,10 @@ public class BpmApplicationController extends BaseController<BpmApplicationVo> {
     @Autowired
     private BpmApplicationFeign bpmApplicationFeign;
 
-    //    @RsaSecurityParameter
+    @RsaSecurityParameter
     @ResponseBody
     @PostMapping("resignation")
-    public String resignation(BpmApplicationVo data, HttpServletRequest request) {
+    public ResultModel resignation(@RequestBody BpmApplicationVo data, HttpServletRequest request) {
         RemoteUserVo remoteUserVo = (RemoteUserVo) request.getSession().getAttribute("user");
 
         data.setCreateTime(new Date());
@@ -41,9 +43,16 @@ public class BpmApplicationController extends BaseController<BpmApplicationVo> {
         data.setOperatorId(remoteUserVo.getEmployeeNo());
         ResultModel<BpmApplicationVo> resultModel = bpmApplicationFeign.save(data);
         if (resultModel.isFlag()) {
-            return "提交完成！单号："+resultModel.getData().getId();
+            return ResultModel.of("提交完成！单号：" + resultModel.getData().getId());
         } else {
-            return "提交失败！";
+            return ResultModel.of("提交失败！");
         }
+    }
+
+    @ResponseBody
+    @RsaSecurityParameter
+    @GetMapping("detail/{id}")
+    public BpmApplicationVo detail(@PathVariable(value = "id") String id) {
+        return bpmApplicationFeign.get(id).getData();
     }
 }

@@ -32,7 +32,7 @@ public class ResultModel<T> implements Serializable {
     /**
      * 标识码
      */
-    private int code;
+    private int code = 200;
 
     /**
      * 内部构造器

@@ -3,13 +3,7 @@ package com.kwdz.blog.api.common.util;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Signature;
+import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -21,19 +15,14 @@ import javax.crypto.Cipher;
 
 
 /**
- * <p>
  * RSA公钥/私钥/签名工具包
- * </p>
- * <p>
- * 罗纳德·李维斯特（Ron [R]ivest）、阿迪·萨莫尔（Adi [S]hamir）和伦纳德·阿德曼（Leonard [A]dleman）
- * </p>
  * <p>
  * 字符串格式的密钥在未在特殊说明情况下都为BASE64编码格式<br/>
  * 由于非对称加密速度极其缓慢，一般文件不使用它来加密而是使用对称加密，<br/>
  * 非对称加密算法可以用来对对称加密的密钥加密，这样保证密钥的安全也就保证了数据的安全
  * </p>
  *
- * @author monkey
+ * @author YT.Hu
  * @date 2018-10-29
  */
 public class RSAUtils {
@@ -61,17 +50,17 @@ public class RSAUtils {
     /**
      * RSA最大加密明文大小
      */
-    private static final int MAX_ENCRYPT_BLOCK = 117;
+    private static final int MAX_ENCRYPT_BLOCK = 245;
 
     /**
      * RSA最大解密密文大小
      */
-    private static final int MAX_DECRYPT_BLOCK = 128;
+    private static final int MAX_DECRYPT_BLOCK = 256;
 
     /**
      * RSA 位数 如果采用2048 上面最大加密和最大解密则须填写:  245 256
      */
-    private static final int INITIALIZE_LENGTH = 1024;
+    private static final int INITIALIZE_LENGTH = 2048;
 
 
     /**
@@ -82,7 +71,7 @@ public class RSAUtils {
      * @return
      * @throws Exception
      */
-    public static Map<String, Object> genKeyPair() throws Exception {
+    public static Map<String, Object> genKeyPair() throws NoSuchAlgorithmException {
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
         keyPairGen.initialize(INITIALIZE_LENGTH);
         KeyPair keyPair = keyPairGen.generateKeyPair();
@@ -346,7 +335,4 @@ public class RSAUtils {
         return temp;
     }
 
-    public static void main(String[] args) throws Exception {
-
-    }
 }
