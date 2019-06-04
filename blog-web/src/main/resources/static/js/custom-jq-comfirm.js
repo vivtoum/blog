@@ -47,3 +47,7 @@ $._encrypt = function (type, tableObjJson, key) {
         formData: '\"' + JSON.stringify(tableObjJson) + '\"'
     })) + "}"
 };
+
+$._popover = function (opt) {
+    return "<div class='alert alert-danger' role='alert'>" + opt.msg + "</div>";
+}
