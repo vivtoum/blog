@@ -7,9 +7,9 @@ $(function () {
         invalidClass: "is-invalid",
         bindClassTo: ".form-control",
         messages: {
-            required: "此处必填",
+            required: i18n('form.alert.required'),
             email: "Please enter a valid email address.",
-            notover30days: "选择最后工作日期小于系统自动选择时间，此项必填"
+            notover30days: i18n('form.alert.days')
         },
         rules: {
             mobile: [/^1[3-9]\d{9}$/, "请填写有效的手机号"],
@@ -35,4 +35,5 @@ $(function () {
         'wVnOr40H3To7VVA5Gvqjdn0gM5/NfB+phCsWXjOuTtcqTusRgXqLG98p6ZJtF2qm70/1tJI7rNQKP' +
         'V0l3q2wlFNvSPfiWgZdoq75c75Cn2jRWG75aduvVbARHQ+VWDQ3YQ5gct2V1qgVNGh4zZ69hcpkpITwZXPE' +
         'KNsCp0+Qdnwmab8HyUYz2o2XzhsLRAdxDAeQ+I+MQddNcIzIR1QbjNMAbJ3WpxORSXaK4DLLPR8QIDAQAB';
+
 });

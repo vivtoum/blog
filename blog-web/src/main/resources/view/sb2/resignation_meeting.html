@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="iframe_div" th:fragment="iframe_div">
+    <script th:src="@{/js/custom-jq-comfirm.js}"></script>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">离职面谈表 </h1>
+    </div>
+    <form>
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-7 col-lg-6 col-sm-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                         data-toggle="collapse"
+                         data-target="#staffInfo" aria-expanded="true"
+                         aria-controls="staffInfo">
+                        <h6 class="m-0 font-weight-bold text-primary">员工信息</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body collapse show" id="staffInfo" th:inline="text">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                    richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes
+                                    anderson
+                                    cred nesciunt sapiente ea proident.
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                    richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes
+                                    anderson
+                                    cred nesciunt sapiente ea proident.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                         data-toggle="collapse"
+                         data-target="#work_hard" aria-expanded="true"
+                         aria-controls="work_hard">
+                        <h6 class="m-0 font-weight-bold text-primary">工作量/工作性质
+                        </h6>
+                        <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="#"><i
+                                class="fas fa-download fa-sm text-white-50"></i> 设为主要原因</a>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body collapse show" id="work_hard" th:inline="text">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card card-body">
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="customCheck"
+                                               id="customCheck1" value="1">
+                                        <label class="custom-control-label" for="customCheck1">工作量太重</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="customCheck"
+                                               id="customCheck2" value="2">
+                                        <label class="custom-control-label" for="customCheck2">工作量不足</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="customCheck"
+                                               id="customCheck3" value="3">
+                                        <label class="custom-control-label" for="customCheck3">工作压力过大</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="customCheck"
+                                               id="customCheck4" value="4">
+                                        <label class="custom-control-label" for="customCheck4">工作郁闷/内容乏味</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="customCheck"
+                                               id="customCheck5" value="5">
+                                        <label class="custom-control-label" for="customCheck5">工作范围太窄</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="customCheck"
+                                               id="customCheck6" value="6">
+                                        <label class="custom-control-label" for="customCheck6">工作流程繁复冗长</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">具体说明</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                  rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <script th:inline="javascript">
+        var _data = [[${last_day}]];
+    </script>
+    <script>
+
+    </script>
+</div>
+</body>
+</html>

@@ -28,15 +28,15 @@ public class I18nController {
         if (language == null || language.equals("")) {
             return "index";
         } else {
-            if (language.equals("CN")) {
+            if (language.equals("zh_CN")) {
                 //会话区域解析器
                 localeResolver.setLocale(request, response, Locale.CHINA);
-            } else if (language.equals("US")) {
+            } else if (language.equals("en_US")) {
                 localeResolver.setLocale(request, response, Locale.US);
             } else {
                 localeResolver.setLocale(request, response, Locale.CHINA);
             }
         }
-        return "/pages/sb2";
+        return "redirect:/pages/sb2";
     }
 }

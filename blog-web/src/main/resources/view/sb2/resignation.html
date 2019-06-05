@@ -9,7 +9,7 @@
     <script th:src="@{/js/custom-jq-comfirm.js}"></script>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">员工辞职通知表</h1>
+        <h1 class="h3 mb-0 text-gray-800" th:text="#{resignation.title}"></h1>
     </div>
 
 
@@ -22,13 +22,13 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Overview</h6>
+                    <h6 class="m-0 font-weight-bold text-primary" th:text="#{resignation.summary}"></h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body" th:inline="text">
                     <form id="resignation_form">
                         <div class="form-group">
-                            <label for="last_day" th:text="#{form.alert.30days}"></label>
+                            <label for="last_day" th:text="#{resignation.last_day}"></label>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
@@ -39,18 +39,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="res_reason">辞职原因</label>
+                            <label for="res_reason" th:text="#{resignation.reason}"></label>
                             <textarea class="form-control" name="res_reason" id="res_reason" rows="3"></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label for="res_remark">备注</label>
-                            <input class="form-control" name="res_remark" placeholder="最后工作日小于系统自动选择时此项必填"
+                            <label for="res_remark" th:text="#{resignation.remark}"></label>
+                            <input class="form-control" name="res_remark" th:placeholder="#{form.alert.days}"
                                    id="res_remark"/>
                         </div>
 
-                        <button type="button" id="res_btn" class="btn btn-outline-primary">提交</button>
-                        <button type="reset" class="btn btn-outline-secondary">重置</button>
+                        <button type="button" id="res_btn" class="btn btn-outline-primary"
+                                th:text="#{common.submit}"></button>
+                        <button type="reset" class="btn btn-outline-secondary" th:text="#{common.reset}"></button>
                     </form>
                 </div>
             </div>

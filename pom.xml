@@ -47,12 +47,6 @@
                 <version>1.0.0</version>
             </dependency>
 
-            <dependency><!--国际化i18n（前端）-->
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>jquery-i18n-properties</artifactId>
-                <version>1.2.7</version>
-            </dependency>
-
             <dependency><!--Excel工具类（Easy POI）-->
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-base</artifactId>
@@ -212,6 +206,25 @@
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>2.0.0</version>
+            </dependency>
+
+            <!-- 国际化 -->
+            <dependency><!--webjars版本定位器 用于省略版本号-->
+                <groupId>org.webjars</groupId>
+                <artifactId>webjars-locator-core</artifactId>
+                <version>0.37</version>
+            </dependency>
+
+            <dependency><!--jQuery前端依赖-->
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+
+            <dependency><!--jQuery国际化插件-->
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>jquery-i18n-properties</artifactId>
+                <version>1.2.7</version>
             </dependency>
 
         </dependencies>

@@ -30,8 +30,35 @@
     <!-- Custom scripts for all pages-->
     <script th:src="@{/sb2/js/sb-admin-2.min.js}"></script>
     <script th:src="@{/js/jquery.validator.min.js}"></script>
+    <script th:src="@{/js/jquery.i18n.properties.min.js}"></script>
     <script th:src="@{/js/global-env.js}"></script>
+    <script th:inline="javascript">
+        //获取应用路径
+        var ROOT = "/";
+        //获取默认语言
+        var LANG_COUNTRY = [[${#locale.language+'_'+#locale.country}]];
 
+        //初始化i18n插件
+        $.i18n.properties({
+            path: ROOT + 'i18n/',//这里表示访问路径
+            name: 'message',//文件名开头
+            language: LANG_COUNTRY,//文件名语言 例如en_US
+            mode: 'both'//默认值
+        });
+
+        //初始化i18n函数
+        function i18n(msgKey) {
+            try {
+                return $.i18n.prop(msgKey);
+            } catch (e) {
+                return msgKey;
+            }
+        }
+
+        //获取国际化翻译值
+        // console.log(i18n('form.alert.30days'));
+        // console.log(i18n('User Login'));
+    </script>
 </div>
 </body>
 </html>

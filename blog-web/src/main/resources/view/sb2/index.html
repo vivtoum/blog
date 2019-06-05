@@ -72,8 +72,7 @@
     </div>
 </div>
 <script th:replace="common/sb2/head::footer"></script>
-</body>
-<script>
+<script th:inline="javascript">
     $(function () {
         $("#accordionSidebar .urlable").on('click', function (e) {
             if ($(e.target).children().length === 0) {
@@ -84,7 +83,9 @@
             $("#iframe_div").load($(e.target).data("pageurl"), function () {
 
             });
-        })
+        });
     })
 </script>
+
+</body>
 </html>

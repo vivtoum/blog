@@ -55,7 +55,7 @@ public class PagesController {
      * @return
      */
     @GetMapping("resignation")
-    public String test(Model model, HttpServletRequest request) throws FileNotFoundException {
+    public String resignation(Model model, HttpServletRequest request) throws FileNotFoundException {
         RemoteUserVo userVo = (RemoteUserVo) request.getSession().getAttribute("user");
         String joinTime = HolidayUtil.getLastWorkDate(30);
         model.addAttribute("currentUser", userVo);
@@ -64,6 +64,26 @@ public class PagesController {
         // "iframe_div"是test.html中需要刷新的部分标志,
         // 在标签里加入：th:fragment="iframe_div"
         return "sb2/resignation::iframe_div";
+    }
+
+
+    /**
+     * 辞职申请页面
+     *
+     * @param model
+     * @param request
+     * @return
+     */
+    @GetMapping("resignation_meeting")
+    public String resignationMeeting(Model model, HttpServletRequest request) throws FileNotFoundException {
+        RemoteUserVo userVo = (RemoteUserVo) request.getSession().getAttribute("user");
+        String joinTime = HolidayUtil.getLastWorkDate(30);
+        model.addAttribute("currentUser", userVo);
+        model.addAttribute("last_day", joinTime);
+        // "test"是test.html的名，
+        // "iframe_div"是test.html中需要刷新的部分标志,
+        // 在标签里加入：th:fragment="iframe_div"
+        return "sb2/resignation_meeting::iframe_div";
     }
 
     @PostMapping(value = "/getIp")
