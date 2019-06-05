@@ -74,15 +74,20 @@
 <script th:replace="common/sb2/head::footer"></script>
 <script th:inline="javascript">
     $(function () {
-        $("#accordionSidebar .urlable").on('click', function (e) {
-            if ($(e.target).children().length === 0) {
-                // $(e.target).parents("li").find("a:first").click();
+        $("#accordionSidebar").on('click', function (e) {
+            var ele = $(e.target);
+            while (!ele.hasClass("urlable") && !ele.is("body")) {
+                ele = ele.parent();
             }
-            if ($("#accordionSidebar .active").removeClass("active")) ;
-            $(e.target).addClass("active");
-            $("#iframe_div").load($(e.target).data("pageurl"), function () {
+            if (ele.is("body")) {
 
-            });
+            } else if (ele.hasClass("urlable")) {
+                $(".collapse").collapse('hide')
+                if ($("#accordionSidebar .active").removeClass("active")) ;
+                ele.addClass("active");
+                $("#iframe_div").load(ele.data("pageurl"), function () {
+                });
+            }
         });
     })
 </script>

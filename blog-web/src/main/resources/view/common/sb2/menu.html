@@ -19,14 +19,14 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item" th:each="menu,i:${_menu}">
-        <a class="nav-link collapsed urlable" href="#"
+        <a class="nav-link collapsed urlable" href="javascript:"
            th:attr="data-target='#collapse_'+${menu.id},data-pageurl=${menu.url}"
            aria-expanded="true" aria-controls="collapseTwo" th:if="${#lists.isEmpty(menu.childMenus)}">
             <i th:class="${menu.icon}+' fas fa-fw'"></i>
             <span th:text="${menu.name}"></span>
         </a>
 
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" th:attr="data-target='#collapse_'+${menu.id}"
+        <a class="nav-link collapsed" href="javascript:" data-toggle="collapse" th:attr="data-target='#collapse_'+${menu.id}"
            aria-expanded="true" aria-controls="collapseTwo" th:unless="${#lists.isEmpty(menu.childMenus)}">
             <i th:class="${menu.icon}+' fas fa-fw'"></i>
             <span th:text="${menu.name}"></span>

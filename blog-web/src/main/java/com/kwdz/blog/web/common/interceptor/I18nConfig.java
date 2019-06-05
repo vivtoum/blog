@@ -21,7 +21,7 @@ public class I18nConfig {
     @Bean
     public LocaleResolver localeResolver() {
         MyLocaleResolver myLocaleResolver = new MyLocaleResolver();
-        myLocaleResolver.setDefaultLocale(Locale.ENGLISH);
+        myLocaleResolver.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
      /*   CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setCookieName("localeCookie"); // 将语言信息添加到Cookie中
         //设置默认区域
