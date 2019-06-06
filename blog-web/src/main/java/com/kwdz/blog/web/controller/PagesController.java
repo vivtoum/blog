@@ -1,6 +1,8 @@
 package com.kwdz.blog.web.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.kwdz.blog.api.common.util.DateUtil;
 import com.kwdz.blog.api.common.util.FastJson;
 import com.kwdz.blog.api.common.util.IpUtil;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.FileNotFoundException;
+
+import static com.kwdz.blog.web.common.util.JsonUtil.readJsonFile;
 
 @Controller
 @RequestMapping("/pages/")
@@ -79,6 +83,7 @@ public class PagesController {
         RemoteUserVo userVo = (RemoteUserVo) request.getSession().getAttribute("user");
         String joinTime = HolidayUtil.getLastWorkDate(30);
         model.addAttribute("currentUser", userVo);
+        model.addAttribute("_form", JSONArray.parse(readJsonFile("classpath:data/resignation_meeting.json")));
         model.addAttribute("last_day", joinTime);
         // "test"是test.html的名，
         // "iframe_div"是test.html中需要刷新的部分标志,

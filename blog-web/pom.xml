@@ -130,6 +130,13 @@
             <artifactId>jquery-i18n-properties</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>com.watsons</groupId>
             <artifactId>Edge.DES</artifactId>
