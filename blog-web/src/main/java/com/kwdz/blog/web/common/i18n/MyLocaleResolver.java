@@ -1,4 +1,4 @@
-package com.kwdz.blog.web.common.interceptor;
+package com.kwdz.blog.web.common.i18n;
 
 import java.util.Locale;
 

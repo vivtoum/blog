@@ -17,6 +17,7 @@ public class ResignationMeeting {
 
     private String id;
     private String title;
+    private String titleEn;
     private String detail;
     private List<ItemsBean> items;
 
@@ -52,12 +53,22 @@ public class ResignationMeeting {
         this.items = items;
     }
 
+    public String getTitleEn() {
+        return titleEn;
+    }
+
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
+    }
+
     public static class ItemsBean {
         /**
          * name : 工作量太重
          */
 
         private String name;
+        private String nameEn;
+        private String id;
 
         public String getName() {
             return name;
@@ -65,6 +76,22 @@ public class ResignationMeeting {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getNameEn() {
+            return nameEn;
+        }
+
+        public void setNameEn(String nameEn) {
+            this.nameEn = nameEn;
         }
     }
 }

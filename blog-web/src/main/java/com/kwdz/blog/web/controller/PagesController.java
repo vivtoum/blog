@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.FileNotFoundException;
 
 import static com.kwdz.blog.web.common.util.JsonUtil.readJsonFile;
+import static com.kwdz.blog.web.common.util.JsonUtil.toTree;
 
 @Controller
 @RequestMapping("/pages/")
@@ -83,7 +84,7 @@ public class PagesController {
         RemoteUserVo userVo = (RemoteUserVo) request.getSession().getAttribute("user");
         String joinTime = HolidayUtil.getLastWorkDate(30);
         model.addAttribute("currentUser", userVo);
-        model.addAttribute("_form", JSONArray.parse(readJsonFile("classpath:data/resignation_meeting.json")));
+        model.addAttribute("_form", toTree(request.getLocale()));
         model.addAttribute("last_day", joinTime);
         // "test"是test.html的名，
         // "iframe_div"是test.html中需要刷新的部分标志,

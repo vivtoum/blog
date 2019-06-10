@@ -9,11 +9,17 @@
     <script th:src="@{/js/custom-jq-comfirm.js}"></script>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">离职面谈表 </h1>
-        <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-           href="javascript:toggleAll()"><i class="fas fa-download fa-sm text-white-50"></i> 设为主要原因</a>
+        <h1 class="h3 mb-0 text-gray-800" th:text="#{meeting.title}"></h1>
+        <div th:inline="text">
+            <a class="d-sm-inline-block btn btn-sm btn-default shadow-sm"
+               href="javascript:toggleAll()"><i class="fas fa-download fa-sm"></i>[[#{common.collage}]]</a>
+            <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="resignation_meeting_form_submit">
+                <i class="fas fa-download fa-sm text-white-50"></i> [[#{common.submit}]]
+            </button>
+        </div>
+
     </div>
-    <form class="multi-collapse">
+    <form class="multi-collapse" id="resignation_meeting_form">
 
         <!-- Content Row -->
         <div class="row">
@@ -66,6 +72,7 @@
                         <div class="row">
                             <div class="col">
                                 <div id="tree"></div>
+                                <input name="main_reason" hidden="hidden">
                             </div>
                         </div>
                     </div>
@@ -73,39 +80,43 @@
 
             </div>
         </div>
-
+        <div class="d-sm-flex align-items-center mb-4">
+            <h1 class="h3 mb-0 text-gray-800"th:text="#{meeting.other}"></h1>
+            <div class="select_reason"></div>
+        </div>
         <div class="row" th:each="reason,i:${_form}">
             <!-- Area Chart -->
             <div class="col-xl-12">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary" data-toggle="collapse"
-                            aria-expanded="true" th:attr="data-target='#'+*{reason.id}, aria-controls=*{reason.id}"
-                            th:text="*{reason.title}">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                         data-toggle="collapse"
+                         aria-expanded="true" th:attr="data-target='#'+*{reason.id}, aria-controls=*{reason.id}">
+                        <h6 class="m-0 font-weight-bold text-primary" th:text="*{reason.text}">
                         </h6>
-                        <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" href="javascript:"><i
-                                class="fas fa-download fa-sm text-white-50"></i> 设为主要原因</a>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body collapse show" th:id="*{reason.id}" th:inline="text">
                         <div class="row">
-                            <div class="col">
+                            <div class="col col-12">
                                 <div class="card card-body">
-                                    <div class="custom-control custom-checkbox" th:each="item,j:*{reason.items}">
+                                    <div class="custom-control custom-checkbox" th:each="item,j:*{reason.nodes}">
                                         <input type="checkbox" class="custom-control-input" th:name="${reason.id}"
-                                               th:id="${reason.id}+'_'+${j.index}" value="1">
+                                               th:id="${reason.id}+'_'+${j.index}"
+                                               th:value="${reason.id}+'_'+${j.index}">
                                         <label class="custom-control-label" th:for="${reason.id}+'_'+${j.index}"
-                                               th:text="${item.name}"></label>
+                                               th:text="${item.text}"></label>
                                     </div>
 
                                 </div>
+                                <!--                                <div class="select_reason"></div>-->
                             </div>
                             <div class="col">
                                 <div class="">
                                     <div class="form-group">
                                         <label th:for="${reason.id}+'_detail'">具体说明</label>
                                         <textarea class="form-control" th:id="${reason.id}+'_detail'"
+                                                  th:name="${reason.id}+'_detail'"
                                                   rows="3"></textarea>
                                     </div>
                                 </div>
@@ -125,50 +136,56 @@
             $('.multi-collapse .collapse').collapse('toggle');
         }
 
-        var tree = [
-            {
-                text: "Parent 1",
-                nodes: [
-                    {
-                        text: "Child 1",
-                        nodes: [
-                            {
-                                text: "Grandchild 1"
-                            },
-                            {
-                                text: "Grandchild 2"
-                            }
-                        ]
-                    },
-                    {
-                        text: "Child 2"
-                    }
-                ]
-            },
-            {
-                text: "Parent 2"
-            },
-            {
-                text: "Parent 3"
-            },
-            {
-                text: "Parent 4"
-            },
-            {
-                text: "Parent 5"
-            }
-        ];
-
-        debugger;
         $('#tree').treeview({
-            data: tree,
-            levels: 3,
-            backColor: 'white',
+            data: _form,
+            levels: 1,
             checkedIcon: 'fas fa-check-square',
             collapseIcon: 'fas fa-minus',
-            expandIcon: 'fas fa-plus'
+            expandIcon: 'fas fa-plus',
+            showCheckbox: true,// 展示checkbox,
+            onNodeSelected: function (event, data) {
+                $("[name='main_reason']").val(data.nodeId);
+            },
         });
 
+
+        $("#resignation_meeting_form").validator({
+            rules: {
+                reason: function () {
+                    return $(":checked").length > 0;
+                }
+            },
+            fields: {
+                main_reason: 'required',
+                work_hard: {
+                    rule: 'reason',
+                    msg: {'reason': "必须勾选一个原因"},
+                    target: '.select_reason',
+                },
+            },
+            valid: function (form) {
+                console.log($(form).serializeArray());
+                $._confirm('是否确认提交申请', function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "/apply/resignation_meeting",
+                            data: $._encrypt('resignation', JSON.stringify(form), _key),
+                            // data: {type: 'resignation', formData: JSON.stringify(_table)},
+                            contentType: "application/json",
+                            success: function (data) {
+                                $._confirm2(data.data);
+                            }
+                        })
+                    }, function () {
+                    }
+                );
+            }
+
+        })
+
+        $("#resignation_meeting_form_submit").click(function () {
+            $("#resignation_meeting_form").trigger("validate");
+        })
     </script>
 </div>
 </body>

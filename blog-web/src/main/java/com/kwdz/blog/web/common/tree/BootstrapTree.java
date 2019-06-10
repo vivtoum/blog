@@ -22,6 +22,7 @@ public class BootstrapTree {
      * nodes : [{}]
      */
 
+    private String id;
     private String text;
     private String icon;
     private String selectedIcon;
@@ -31,7 +32,7 @@ public class BootstrapTree {
     private boolean selectable;
     private StateBean state;
     private List<String> tags;
-    private List<NodesBean> nodes;
+    private List<BootstrapTree> nodes;
 
     public String getText() {
         return text;
@@ -105,12 +106,20 @@ public class BootstrapTree {
         this.tags = tags;
     }
 
-    public List<NodesBean> getNodes() {
+    public List<BootstrapTree> getNodes() {
         return nodes;
     }
 
-    public void setNodes(List<NodesBean> nodes) {
+    public void setNodes(List<BootstrapTree> nodes) {
         this.nodes = nodes;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public static class StateBean {
