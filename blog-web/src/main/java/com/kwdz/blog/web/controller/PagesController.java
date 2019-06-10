@@ -84,7 +84,7 @@ public class PagesController {
         RemoteUserVo userVo = (RemoteUserVo) request.getSession().getAttribute("user");
         String joinTime = HolidayUtil.getLastWorkDate(30);
         model.addAttribute("currentUser", userVo);
-        model.addAttribute("_form", toTree(request.getLocale()));
+        model.addAttribute("_form", toTree(request));
         model.addAttribute("last_day", joinTime);
         // "test"是test.html的名，
         // "iframe_div"是test.html中需要刷新的部分标志,

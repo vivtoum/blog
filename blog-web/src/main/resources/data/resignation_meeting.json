@@ -13,13 +13,11 @@
         "id": 2,
         "name": "工作量不足",
         "nameEn": "Small work load"
-
       },
       {
         "id": 3,
         "name": "工作压力过大",
         "nameEn": "Great work pressure"
-
       },
       {
         "id": 4,
@@ -30,13 +28,11 @@
         "id": 5,
         "name": "工作范围太窄",
         "nameEn": "Work is depressing and dull"
-
       },
       {
         "id": 6,
         "name": "工作流程繁复冗长",
         "nameEn": "Work is depressing and dull"
-
       }
     ],
     "detail": ""
@@ -48,11 +44,13 @@
     "items": [
       {
         "id": 7,
-        "name": "经常超时工作"
+        "name": "经常超时工作",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 8,
-        "name": "轮班工作/弹性上班时间"
+        "name": "轮班工作/弹性上班时间",
+        "nameEn": "Work is depressing and dull"
       }
     ],
     "detail": ""
@@ -63,7 +61,8 @@
     "items": [
       {
         "id": 9,
-        "name": "工作量环境恶劣"
+        "name": "工作量环境恶劣",
+        "nameEn": "Work is depressing and dull"
       }
     ],
     "detail": ""
@@ -74,7 +73,8 @@
     "items": [
       {
         "id": 10,
-        "name": "工作地点距离住所太远"
+        "name": "工作地点距离住所太远",
+        "nameEn": "Work is depressing and dull"
       }
     ],
     "detail": ""
@@ -85,19 +85,23 @@
     "items": [
       {
         "id": 11,
-        "name": "薪酬偏低"
+        "name": "薪酬偏低",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 12,
-        "name": "新工作能提供较佳条件-薪酬较佳"
+        "name": "新工作能提供较佳条件-薪酬较佳",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 13,
-        "name": "新工作能提供较佳条件-较佳待遇"
+        "name": "新工作能提供较佳条件-较佳待遇",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 14,
-        "name": "新工作能提供较佳条件-自雇"
+        "name": "新工作能提供较佳条件-自雇",
+        "nameEn": "Work is depressing and dull"
       }
     ],
     "detail": ""
@@ -108,39 +112,48 @@
     "items": [
       {
         "id": 15,
-        "name": "上司-偏心/偏见"
+        "name": "上司-偏心/偏见",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 16,
-        "name": "上司-工作分配不公平"
+        "name": "上司-工作分配不公平",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 17,
-        "name": "上司-性格不合"
+        "name": "上司-性格不合",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 18,
-        "name": "上司-对下属不礼貌"
+        "name": "上司-对下属不礼貌",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 19,
-        "name": "上司-拒绝与下属沟通"
+        "name": "上司-拒绝与下属沟通",
+        "nameEn": "Work is depressing and dull"
       },
       {
         "id": 20,
-        "name": "上司-指示含糊/不足"
+        "name": "上司-指示含糊/不足",
+        "nameEn": "The superior"
       },
       {
         "id": 21,
-        "name": "上司-不负责任"
+        "name": "上司-不负责任",
+        "nameEn": "The superior irresponsible"
       },
       {
         "id": 22,
-        "name": "上司-对下属的表现不予致评或不作出适当回应"
+        "name": "上司-对下属的表现不予致评或不作出适当回应",
+        "nameEn": "The superior not commenting or responding appropriately."
       },
       {
         "id": 23,
-        "name": "同事间关系不理想"
+        "name": "同事间关系不理想",
+        "nameEn": "A bad relationship with colleague"
       }
     ],
     "detail": ""
@@ -148,22 +161,27 @@
   {
     "id": "work_improve",
     "title": "培训及晋升",
+    "titleEn": "Training and promotion",
     "items": [
       {
         "id": 24,
-        "name": "晋升机会不足"
+        "name": "晋升机会不足",
+        "nameEn": "Lack of promotion opportunities"
       },
       {
         "id": 25,
-        "name": "自身职业发展机会不足"
+        "name": "自身职业发展机会不足",
+        "nameEn": "Lack of career development opportunities"
       },
       {
         "id": 26,
-        "name": "欠缺培训"
+        "name": "欠缺培训",
+        "nameEn": "Lack of training"
       },
       {
         "id": 27,
-        "name": "新工作能提供较佳条件-较佳发展机会"
+        "name": "新工作能提供较佳条件-较佳发展机会",
+        "nameEn": "New jobs offer better conditions - better opportunities for development"
       }
     ],
     "detail": ""
@@ -171,30 +189,37 @@
   {
     "id": "work_personal",
     "title": "个人原因",
+    "titleEn": "Personal reasons",
     "items": [
       {
         "id": 28,
-        "name": "移民"
+        "name": "移民",
+        "nameEn": "Emigrate"
       },
       {
         "id": 29,
-        "name": "继续深造"
+        "name": "继续深造",
+        "nameEn": "Study further"
       },
       {
         "id": 30,
-        "name": "工作兴趣有所改变"
+        "name": "工作兴趣有所改变",
+        "nameEn": "Job Interest Changed"
       },
       {
         "id": 31,
-        "name": "健康问题"
+        "name": "健康问题",
+        "nameEn": "Health"
       },
       {
         "id": 32,
-        "name": "照顾家庭或结婚"
+        "name": "照顾家庭或结婚",
+        "nameEn": "Family or get married"
       },
       {
         "id": 33,
-        "name": "退休"
+        "name": "退休",
+        "nameEn": "Retire"
       }
     ],
     "detail": ""
