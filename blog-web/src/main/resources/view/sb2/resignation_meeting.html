@@ -12,7 +12,7 @@
         <h1 class="h3 mb-0 text-gray-800" th:text="#{meeting.title}"></h1>
         <div th:inline="text">
             <a class="d-sm-inline-block btn btn-sm btn-default shadow-sm"
-               href="javascript:toggleAll()"><i class="fas fa-download fa-sm"></i>[[#{common.collage}]]</a>
+               href="javascript:toggleAll()"><i class="fas fa-toggle-on fa-sm"></i>[[#{common.collage}]]</a>
             <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="resignation_meeting_form_submit">
                 <i class="fas fa-download fa-sm text-white-50"></i> [[#{common.submit}]]
             </button>
@@ -21,7 +21,7 @@
     </div>
     <form class="multi-collapse" id="resignation_meeting_form">
 
-        <!-- Content Row -->
+        <!--part1：员工信息-->
         <div class="row">
 
             <!-- Area Chart -->
@@ -66,6 +66,7 @@
                          data-target="#main_reason" aria-expanded="true"
                          aria-controls="main_reason">
                         <h6 class="m-0 font-weight-bold text-primary">主要原因</h6>
+                        <div class="mainReasonTarget"></div>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body collapse show" id="main_reason" th:inline="text">
@@ -80,26 +81,145 @@
 
             </div>
         </div>
-        <div class="d-sm-flex align-items-center mb-4">
-            <h1 class="h3 mb-0 text-gray-800"th:text="#{meeting.other}"></h1>
-            <div class="select_reason"></div>
-        </div>
-        <div class="row" th:each="reason,i:${_form}">
-            <!-- Area Chart -->
-            <div class="col-xl-12">
+
+        <!--part2：其他原因-->
+        <!--        <div class="d-sm-flex align-items-center mb-4">
+                    <h1 class="h3 mb-0 text-gray-800" th:text="#{meeting.other}"></h1>
+                    <div class="select_reason"></div>
+                </div>
+                <div class="row" th:each="reason,i:${_form}">
+                    &lt;!&ndash; Area Chart &ndash;&gt;
+                    <div class="col-xl-12">
+                        <div class="card shadow mb-4">
+                            &lt;!&ndash; Card Header - Dropdown &ndash;&gt;
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                                 data-toggle="collapse"
+                                 aria-expanded="true" th:attr="data-target='#'+*{reason.id}, aria-controls=*{reason.id}">
+                                <h6 class="m-0 font-weight-bold text-primary" th:text="*{reason.text}">
+                                </h6>
+                            </div>
+                            &lt;!&ndash; Card Body &ndash;&gt;
+                            <div class="card-body collapse show" th:id="*{reason.id}" th:inline="text">
+                                <div class="row">
+                                    <div class="col col-12">
+                                        <div class="card card-body">
+                                            <div class="custom-control custom-checkbox" th:each="item,j:*{reason.nodes}">
+                                                <input type="checkbox" class="custom-control-input" th:name="${reason.id}"
+                                                       th:id="${reason.id}+'_'+${j.index}"
+                                                       th:value="${reason.id}+'_'+${j.index}">
+                                                <label class="custom-control-label" th:for="${reason.id}+'_'+${j.index}"
+                                                       th:text="${item.text}"></label>
+                                            </div>
+
+                                        </div>
+                                        &lt;!&ndash;                                <div class="select_reason"></div>&ndash;&gt;
+                                    </div>
+                                    <div class="col">
+                                        <div class="">
+                                            <div class="form-group">
+                                                <label th:for="${reason.id}+'_detail'">具体说明</label>
+                                                <textarea class="form-control" th:id="${reason.id}+'_detail'"
+                                                          th:name="${reason.id}+'_detail'"
+                                                          rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" th:if="${_step} eq 'aft_meeting'">
+                    &lt;!&ndash; Area Chart &ndash;&gt;
+                    <div class="col-xl-7 col-lg-6 col-sm-12">
+                        <div class="card shadow mb-4">
+                            &lt;!&ndash; Card Header - Dropdown &ndash;&gt;
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                                 data-toggle="collapse" data-target="#res_suggestion" aria-controls="res_suggestion"
+                                 aria-expanded="true">
+                                <h6 class="m-0 font-weight-bold text-primary">改进提议
+                                </h6>
+                            </div>
+                            &lt;!&ndash; Card Body &ndash;&gt;
+                            <div class="card-body collapse show" id="res_suggestion">
+                                <div class="row">
+                                    <div class="col col-12">
+                                        <div class="form-group">
+                                            <label>公司在哪方面让你满意,有哪些地方可以改进?</label>
+                                            <textarea class="form-control"
+                                                      rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-5 col-lg-6 col-sm-12">
+                        <div class="card shadow mb-4">
+                            &lt;!&ndash; Card Header - Dropdown &ndash;&gt;
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                                 data-toggle="collapse"
+                                 data-target="#personal_info_box" aria-expanded="true"
+                                 aria-controls="personal_info_box">
+                                <h6 class="m-0 font-weight-bold text-primary">个人联系方式</h6>
+                            </div>
+                            &lt;!&ndash; Card Body &ndash;&gt;
+                            <div class="card-body collapse show" id="personal_info_box" th:inline="text">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="personal_phone">[[#{meeting.personalPhone}]]</label>
+
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="inputGroupPrepend1"><i
+                                                            class="fas fa-phone"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="personal_phone"
+                                                       th:placeholder="#{meeting.personalPhone}">
+                                            </div>
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="personal_email">[[#{meeting.personalEmail}]]</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="inputGroupPrepend2"><i
+                                                            class="fas fa-envelope"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="personal_email"
+                                                       th:placeholder="#{meeting.personalEmail}">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>-->
+        <div class="row">
+            <div class="col-12">
                 <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                          data-toggle="collapse"
-                         aria-expanded="true" th:attr="data-target='#'+*{reason.id}, aria-controls=*{reason.id}">
-                        <h6 class="m-0 font-weight-bold text-primary" th:text="*{reason.text}">
-                        </h6>
+                         data-target="#otherReason" aria-expanded="true"
+                         aria-controls="otherReason">
+                        <h6 class="m-0 font-weight-bold text-primary">离职原因调查</h6>
+                        <div class="select_reason"></div>
                     </div>
+
                     <!-- Card Body -->
-                    <div class="card-body collapse show" th:id="*{reason.id}" th:inline="text">
+                    <div class="card-body collapse show" id="otherReason" th:inline="text">
                         <div class="row">
-                            <div class="col col-12">
-                                <div class="card card-body">
+                            <div class="col col-sm-12 col-md-6 col-lg-3" th:each="reason,i:${_form}"
+                                 th:if="${i.index <= 3}">
+                                <div class="card card-body mb-4">
+                                    <label class="h5 font-weight-bold" th:text="${reason.text}"></label>
                                     <div class="custom-control custom-checkbox" th:each="item,j:*{reason.nodes}">
                                         <input type="checkbox" class="custom-control-input" th:name="${reason.id}"
                                                th:id="${reason.id}+'_'+${j.index}"
@@ -107,12 +227,7 @@
                                         <label class="custom-control-label" th:for="${reason.id}+'_'+${j.index}"
                                                th:text="${item.text}"></label>
                                     </div>
-
-                                </div>
-                                <!--                                <div class="select_reason"></div>-->
-                            </div>
-                            <div class="col">
-                                <div class="">
+                                    <div class="dropdown-divider"></div>
                                     <div class="form-group">
                                         <label th:for="${reason.id}+'_detail'">具体说明</label>
                                         <textarea class="form-control" th:id="${reason.id}+'_detail'"
@@ -122,20 +237,151 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        <div class="row">
+                            <div class="col col-sm-12 col-md-6 col-lg-3" th:each="reason,i:${_form}"
+                                 th:if="${i.index > 3}">
+                                <div class="card card-body mb-4">
+                                    <label class="h5 font-weight-bold" th:text="${reason.text}"></label>
+                                    <div class="custom-control custom-checkbox" th:each="item,j:*{reason.nodes}">
+                                        <input type="checkbox" class="custom-control-input" th:name="${reason.id}"
+                                               th:id="${reason.id}+'_'+${j.index}"
+                                               th:value="${reason.id}+'_'+${j.index}">
+                                        <label class="custom-control-label" th:for="${reason.id}+'_'+${j.index}"
+                                               th:text="${item.text}"></label>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="form-group">
+                                        <label th:for="${reason.id}+'_detail'">具体说明</label>
+                                        <textarea class="form-control" th:id="${reason.id}+'_detail'"
+                                                  th:name="${reason.id}+'_detail'"
+                                                  rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input name="otherReason" hidden="hidden">
                     </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--part3：离职意向-->
+        <div class="row" id="resignationIntentionDiv">
+            <!-- Area Chart -->
+            <div class="col-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                         data-toggle="collapse"
+                         data-target="#intention" aria-expanded="true"
+                         aria-controls="intention">
+                        <h6 class="m-0 font-weight-bold text-primary">离职意向</h6>
+                        <div class="resignationIntentionTarget"></div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body collapse show" id="intention" th:inline="text">
+                        <div class="row">
+                            <div class="col col-sm-12 col-md-6 col-lg-3 mb-4">
+                                <div class="card card-body">
+                                    <label class="h5 font-weight-bold">你是否已经找到新工作？</label>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention1_1" name="intention1"
+                                               class="custom-control-input" value="y">
+                                        <label class="custom-control-label" for="intention1_1">是</label>
+                                        <input class="col-9 float-right form-control"
+                                               id="intention1_1_detail"
+                                               name="intention1_1_detail" placeholder="如果是，请填写新工作类别">
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention1_2" name="intention1"
+                                               class="custom-control-input" value="n">
+                                        <label class="custom-control-label" for="intention1_2">否</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-sm-12 col-md-6 col-lg-3 mb-4">
+                                <div class="card card-body">
+                                    <label class="h5 font-weight-bold">你日后会否再为本公司服务？</label>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention2_1" name="intention2"
+                                               class="custom-control-input" value="y">
+                                        <label class="custom-control-label" for="intention2_1">是</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention2_2" name="intention2"
+                                               class="custom-control-input" value="n">
+                                        <label class="custom-control-label" for="intention2_2">否</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-sm-12 col-md-6 col-lg-3 mb-4">
+                                <div class="card card-body">
+                                    <label class="h5 font-weight-bold">你在何时考虑辞职？</label>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention3_1" name="intention3"
+                                               class="custom-control-input" value="1">
+                                        <label class="custom-control-label" for="intention3_1">一个月前</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention3_2" name="intention3"
+                                               class="custom-control-input" value="3">
+                                        <label class="custom-control-label" for="intention3_2">三个月前</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention3_3" name="intention3"
+                                               class="custom-control-input" value="6">
+                                        <label class="custom-control-label" for="intention3_3">半年前</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention3_4" name="intention3"
+                                               class="custom-control-input" value="12">
+                                        <label class="custom-control-label" for="intention3_4"> 一年或再之前</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-sm-12 col-md-6 col-lg-3 mb-4">
+                                <div class="card card-body">
+                                    <label class="h5 font-weight-bold">你会否推荐你的朋友到公司工作？</label>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention4_1" name="intention4"
+                                               class="custom-control-input" value="y">
+                                        <label class="custom-control-label" for="intention4_1">是</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="radio" id="intention4_2" name="intention4"
+                                               class="custom-control-input" value="n">
+                                        <label class="custom-control-label" for="intention4_2">否</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input name="resignationIntentionHidden" hidden="hidden">
                 </div>
             </div>
         </div>
+
     </form>
 
     <script th:inline="javascript">
-        var _data = [[${last_day}]];
-        var _form = [[${_form}]];
+        var _data = [[${last_day}]], _form = [[${_form}]],
+            mainReason = $("[name='main_reason']"),//  主要原因单选树的隐藏域
+            otherReason = $("[name='otherReason']"),//  离职原因调查多个复选框的隐藏域
+            resignationIntentionHidden = $("[name='resignationIntentionHidden']");//  离职意向多个单选框的隐藏域
 
         function toggleAll() {
             $('.multi-collapse .collapse').collapse('toggle');
         }
 
+        //  bootstrap-treeview 插件的初始化
         $('#tree').treeview({
             data: _form,
             levels: 1,
@@ -144,24 +390,75 @@
             expandIcon: 'fas fa-plus',
             showCheckbox: true,// 展示checkbox,
             onNodeSelected: function (event, data) {
-                $("[name='main_reason']").val(data.nodeId);
+                //  选之后把选择结果放到隐藏域
+                mainReason.val(data.nodeId);
+                mainReason.isValid();
             },
+            onNodeUnselected: function (event, data) {
+                //  取消选择后把隐藏域清除
+                mainReason.val(null);
+                mainReason.isValid();
+            }
         });
 
 
+        //  离职原因调查复选框发生变化之后，把选择的结果放到隐藏域里，并触发隐藏域字段的验证
+        $("#otherReason :checkbox").change(function () {
+            otherReason.val(($("#otherReason :checked").length > 0) ? 1 : null);
+            otherReason.isValid();
+        });
+
+        //  离职意向单选框发生变化后，把标识放到隐藏域中，对隐藏域验证
+        $("#intention :input").change(function () {
+            try {
+                var a = $("[name='intention1']:checked").val().length !== 0,
+                    a_v = a = $("[name='intention1']:checked").val(),
+                    b = $("[name='intention2']:checked").val().length !== 0,
+                    c = $("[name='intention3']:checked").val().length !== 0,
+                    d = $("[name='intention4']:checked").val().length !== 0,
+                    a_y = $("[name='intention1_1_detail']").val().length !== 0;
+                if (a_v === 'y' && a) {
+                    resignationIntentionHidden.val((a && a_y && b && c && d) ? 1 : null);
+                } else if (a_v === 'n' && a) {
+                    resignationIntentionHidden.val((a && b && c && d) ? 1 : null);
+                } else {
+                    resignationIntentionHidden.val(null)
+                }
+            } catch (e) {
+                return resignationIntentionHidden.val(null);
+            } finally {
+                resignationIntentionHidden.isValid();
+            }
+        });
+
+        //  nice validation表单验证插件的初始化
         $("#resignation_meeting_form").validator({
+            timely: 3,
+            messages: {
+                intention: i18n("form.alert.intention"),
+                reason: i18n("form.alert.reason"),
+            },
             rules: {
                 reason: function () {
-                    return $(":checked").length > 0;
+                    return 'true' === otherReason.val();
+                },
+                intention: function () {
+                    return 'true' === resignationIntentionHidden.val();
                 }
             },
             fields: {
-                main_reason: 'required',
-                work_hard: {
-                    rule: 'reason',
-                    msg: {'reason': "必须勾选一个原因"},
-                    target: '.select_reason',
+                main_reason: {
+                    rule: 'required',
+                    target: ".mainReasonTarget"
                 },
+                resignationIntentionHidden: {
+                    rule: 'required',
+                    target: '.resignationIntentionTarget'
+                },
+                otherReason: {
+                    rule: 'required',
+                    target: '.select_reason'
+                }
             },
             valid: function (form) {
                 console.log($(form).serializeArray());
