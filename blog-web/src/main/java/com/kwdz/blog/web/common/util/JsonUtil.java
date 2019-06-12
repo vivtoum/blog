@@ -6,9 +6,14 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.kwdz.blog.api.common.util.FastCopy;
 import com.kwdz.blog.api.common.util.FastJson;
+import com.kwdz.blog.api.common.util.tree.NodeInfo;
+import com.kwdz.blog.api.common.util.tree.TreeHandler;
+import com.kwdz.blog.api.dict.feign.SysDictFeign;
+import com.kwdz.blog.api.dict.vo.SysDictVo;
 import com.kwdz.blog.web.common.tree.BootstrapTree;
 import com.kwdz.blog.web.common.tree.ResignationMeeting;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +31,9 @@ import java.util.Optional;
  */
 @Slf4j
 public class JsonUtil {
+
+    @Autowired
+    private SysDictFeign sysDictFeign;
 
     /**
      * 读取json文件，返回json串
@@ -55,22 +63,19 @@ public class JsonUtil {
         }
     }
 
-    public static List<BootstrapTree> toTree(HttpServletRequest request) throws FileNotFoundException {
+    public static List<BootstrapTree> toTree(NodeInfo<SysDictVo> root) throws FileNotFoundException {
         List<BootstrapTree> list = new ArrayList<>();
-        List<ResignationMeeting> list2 = getMeetingJson();
+//        List<ResignationMeeting> list2 = getMeetingJson();
         log.info("读取resignation_meeting.json");
-        list2.forEach(item -> {
+        root.getChildren().forEach(item -> {
             BootstrapTree a = new BootstrapTree();
-            if (item.getItems() != null && item.getItems().size() > 0) {
+            if (item.getChildren() != null && item.getChildren().size() > 0) {
                 List<BootstrapTree> children = new ArrayList<>();
-                item.getItems().forEach(x -> {
+                item.getChildren().forEach(x -> {
                     BootstrapTree b = new BootstrapTree();
-                    b.setId(x.getId());
-                    if (request.getLocale().equals(Locale.US)) {
-                        b.setText(x.getNameEn());
-                    } else {
-                        b.setText(x.getName());
-                    }
+                    b.setId(x.getCont().getId());
+                    b.setName(x.getCont().getTypeName() + "|" + x.getCont().getDictNo());
+                    b.setText(x.getCont().getDictValue());
                     b.setSelectable(true);
                     children.add(b);
                 });
@@ -79,12 +84,9 @@ public class JsonUtil {
                 a.setNodes(null);
             }
             a.setSelectable(false);
-            if (request.getLocale().equals(Locale.US)) {
-                a.setText(item.getTitleEn());
-            } else {
-                a.setText(item.getTitle());
-            }
-            a.setId(item.getId());
+            a.setName(item.getCont().getTypeName() + "|" + item.getCont().getDictNo());
+            a.setText(item.getCont().getDictValue());
+            a.setId(item.getCont().getId());
             list.add(a);
         });
         return list;

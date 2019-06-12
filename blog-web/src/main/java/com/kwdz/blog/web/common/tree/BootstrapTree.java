@@ -25,6 +25,7 @@ public class BootstrapTree {
     private String id;
     private String text;
     private String icon;
+    private String name;
     private String selectedIcon;
     private String color;
     private String backColor;
@@ -120,6 +121,14 @@ public class BootstrapTree {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public static class StateBean {

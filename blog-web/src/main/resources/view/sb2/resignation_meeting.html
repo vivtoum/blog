@@ -245,17 +245,17 @@
                                 <div class="card card-body mb-4">
                                     <label class="h5 font-weight-bold" th:text="${reason.text}"></label>
                                     <div class="custom-control custom-checkbox" th:each="item,j:*{reason.nodes}">
-                                        <input type="checkbox" class="custom-control-input" th:name="${reason.id}"
-                                               th:id="${reason.id}+'_'+${j.index}"
-                                               th:value="${reason.id}+'_'+${j.index}">
-                                        <label class="custom-control-label" th:for="${reason.id}+'_'+${j.index}"
+                                        <input type="checkbox" class="custom-control-input" th:name="${reason.name}"
+                                               th:id="${reason.name}+'_'+${j.index}"
+                                               th:value="${reason.name}+'_'+${j.index}">
+                                        <label class="custom-control-label" th:for="${reason.name}+'_'+${j.index}"
                                                th:text="${item.text}"></label>
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <div class="form-group">
-                                        <label th:for="${reason.id}+'_detail'">具体说明</label>
-                                        <textarea class="form-control" th:id="${reason.id}+'_detail'"
-                                                  th:name="${reason.id}+'_detail'"
+                                        <label th:for="${reason.name}+'_detail'">具体说明</label>
+                                        <textarea class="form-control" th:id="${reason.name}+'_detail'"
+                                                  th:name="${reason.name}+'_detail'"
                                                   rows="3"></textarea>
                                     </div>
                                 </div>
@@ -465,8 +465,8 @@
                 $._confirm('是否确认提交申请', function () {
                         $.ajax({
                             type: "POST",
-                            url: "/apply/resignation_meeting",
-                            data: $._encrypt('resignation', JSON.stringify(form), _key),
+                            url: "/apply/resignationMeeting",
+                            data: $._encrypt('resignation', $(form).serializeArray(), _key),
                             // data: {type: 'resignation', formData: JSON.stringify(_table)},
                             contentType: "application/json",
                             success: function (data) {

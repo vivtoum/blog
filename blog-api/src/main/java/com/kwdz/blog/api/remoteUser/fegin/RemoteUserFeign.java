@@ -2,7 +2,6 @@ package com.kwdz.blog.api.remoteUser.fegin;
 
 import com.kwdz.blog.api.common.feign.BaseFeign;
 import com.kwdz.blog.api.remoteUser.vo.RemoteUserVo;
-import com.kwdz.blog.api.user.vo.UserVo;
 import org.springframework.cloud.netflix.feign.FeignClient;
 
 /**

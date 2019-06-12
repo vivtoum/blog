@@ -6,6 +6,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.kwdz.blog.api.common.util.DateUtil;
 import com.kwdz.blog.api.common.util.FastJson;
 import com.kwdz.blog.api.common.util.IpUtil;
+import com.kwdz.blog.api.common.util.tree.NodeInfo;
+import com.kwdz.blog.api.common.util.tree.TreeHandler;
+import com.kwdz.blog.api.dict.feign.SysDictFeign;
+import com.kwdz.blog.api.dict.vo.SysDictVo;
 import com.kwdz.blog.api.menu.fegin.SysMenuFeign;
 import com.kwdz.blog.api.menu.vo.SysMenuVo;
 import com.kwdz.blog.api.remoteUser.vo.RemoteUserVo;
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import static com.kwdz.blog.web.common.util.JsonUtil.readJsonFile;
 import static com.kwdz.blog.web.common.util.JsonUtil.toTree;
@@ -29,6 +34,8 @@ public class PagesController {
 
     @Autowired
     private SysMenuFeign sysMenuFeign;
+    @Autowired
+    private SysDictFeign sysDictFeign;
 
     @GetMapping("sb2")
     public ModelAndView sb2(HttpServletRequest request) {
@@ -88,12 +95,19 @@ public class PagesController {
      * @return
      */
     @GetMapping("resignation_meeting/{step}")
-    public String resignationMeeting(Model model, HttpServletRequest request, @PathVariable("step") String step) throws FileNotFoundException {
+    public String resignationMeeting(Model model, HttpServletRequest request, @PathVariable("step") String step) throws Exception {
         RemoteUserVo userVo = (RemoteUserVo) request.getSession().getAttribute("user");
         //  todo 判断员工属于实习/试用/还是正式员工，不同性质last working day不同
         String joinTime = HolidayUtil.getLastWorkDate(30);
         model.addAttribute("currentUser", userVo);
-        model.addAttribute("_form", toTree(request));
+
+
+        List<SysDictVo> list = sysDictFeign.list(SysDictVo.of("resignationMeeting_reason")).getData();
+        TreeHandler<SysDictVo> tree = new TreeHandler<>("-1");
+        NodeInfo<SysDictVo> root = tree.parseArray(list);
+//        model.addAttribute("_form", root);
+
+        model.addAttribute("_form", toTree(root));
         model.addAttribute("last_day", joinTime);
         model.addAttribute("_step", step);
         // "test"是test.html的名，
