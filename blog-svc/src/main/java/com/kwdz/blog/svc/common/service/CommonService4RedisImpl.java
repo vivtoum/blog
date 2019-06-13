@@ -1,7 +1,6 @@
 package com.kwdz.blog.svc.common.service;
 
 
-import com.kwdz.blog.api.common.error.DataException;
 import com.kwdz.blog.api.common.page.PageInfo;
 import com.kwdz.blog.api.common.result.ResultModel;
 import com.kwdz.blog.api.common.util.FastCopy;
@@ -15,10 +14,10 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 
 import javax.persistence.EntityManager;
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -123,6 +122,7 @@ public class CommonService4RedisImpl<V, E> implements CommonService<V, E> {
             Object obj = Class.forName(this.entityClass.getName()).newInstance();
             for (Field field : obj.getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(Id.class)) {
+                    field.setAccessible(true); // 抑制Java的访问控制检查
                     field.set(obj, id);
                     break;
                 }

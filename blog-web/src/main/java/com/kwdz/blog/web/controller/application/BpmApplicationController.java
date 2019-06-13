@@ -35,18 +35,8 @@ public class BpmApplicationController extends BaseController<BpmApplicationVo> {
     @RsaSecurityParameter
     @ResponseBody
     @PostMapping("resignation")
-    public ResultModel resignation(@RequestBody BpmApplicationVo data, HttpServletRequest request) {
-        RemoteUserVo remoteUserVo = (RemoteUserVo) request.getSession().getAttribute("user");
-
-        data.setCreateTime(new Date());
-        data.setOperatorIp(IpUtil.getIpAddr(request));
-        data.setOperatorId(remoteUserVo.getEmployeeNo());
-        ResultModel<BpmApplicationVo> resultModel = bpmApplicationFeign.save(data);
-        if (resultModel.isFlag()) {
-            return ResultModel.of("提交完成！单号：" + resultModel.getData().getId());
-        } else {
-            return ResultModel.of("提交失败！");
-        }
+    public ResultModel resignation(@RequestBody BpmApplicationVo data) {
+        return bpmApplicationFeign.applyResignation(data);
     }
 
     @RsaSecurityParameter
